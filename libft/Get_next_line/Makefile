@@ -12,12 +12,11 @@
 
 FLGS = -Wall -Wextra -Werror
 
-NAME =libftprintf.a
+NAME =get_next_line.a
 
 AR = ar rcs
 
-SRCS = ft_printf.c ft_printp.c ft_putnbr_base.c \
-ft_putstr_fd.c ft_putchar_fd.c ft_strlen.c \
+SRCS = get_next_line_bonus.c get_next_line_utils_bonus.c
  
 
 OBJECT = $(SRCS:.c=.o) 
@@ -27,56 +26,22 @@ CC = cc
 
 RM = rm -f
 
-
-COUNT_FILE = count.txt
-
-# Verifica se o arquivo existe; se não, cria com valor inicial 0
-ifeq ($(wildcard $(COUNT_FILE)),)
-    $(shell echo 0 > $(COUNT_FILE))
-endif
-
-COUNT = $(shell cat $(COUNT_FILE))
-
-
-#.SILENT:
+.SILENT:
 
 all: $(NAME)
 
 $(NAME): $(OBJECT)
-	@$(AR) $@ $^
-	@rm -f $(COUNT_FILE)
-
-%.o:%.c libftprintf.a
-	@cc -c $(FLGS) -o $@ $< 
-	$(eval COUNT=$(shell echo $$(( $(COUNT) + 1 ))))
-
-	@echo $(COUNT) > $(COUNT_FILE)
-	@$(MAKE) -s show_progress
-
-	
-
-show_progress:
-	@clear
-
-	@PERCENT=$$(($(COUNT) * 100 / $(words $(SRCS)) )); \
-	PROG_LEN=$$(($$PERCENT / 10)); \
-	echo -n "  $(NAME) ["; \
-	for i in `seq 1 $$PROG_LEN`; do \
-		echo -n "#"; \
-	done; \
-	for i in `seq $$PROG_LEN 10`; do \
-		echo -n " "; \
-	done; \
-	echo "] $$PERCENT%"
+	$(AR) $@ $^
 
 
+%.o:%.c libft.h
+	cc -c $(FLGS) -o $@ $<  
 
 clean:
 	$(RM) $(OBJECT)
-	@rm -f $(COUNT_FILE)
+
 fclean: clean
-	$(RM) $(NAME)
-	@rm -f $(COUNT_FILE) 
+	$(RM) $(NAME) 
 
 re: fclean all
 

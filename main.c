@@ -1,9 +1,6 @@
 
-#include "./minilibx-linux/mlx_int.h"
-#include "./minilibx-linux/mlx.h"
-# include "libft/libft/libft.h"
-# include "libft/printf/ft_printf.h"
 
+#include "./src/so_long.h"
 
 typedef struct	s_data {
 	void	*img;
@@ -41,42 +38,57 @@ int	sclose(int keycode,int x,int y, t_vars *vars)
 }
 
 
-int	main(void)
+// int	main(void)
+// {
+	
+// 	void *img;
+// 	t_vars	vars;
+
+// 	vars.mlx = mlx_init();
+// 	vars.win = mlx_new_window(vars.mlx, 500, 500, "Hello world!");
+
+// 	int		img_width;
+// 	int		img_height;
+	
+
+
+// 	img = mlx_xpm_file_to_image(vars.mlx,"./img/Untitled.xpm",&img_width,&img_height);
+// 	mlx_put_image_to_window(vars.mlx, vars.win, img, 0, 0);
+// 	//sleep(2);
+// 	mlx_put_image_to_window(vars.mlx, vars.win, img, 250, 0);
+
+	
+
+// 	mlx_destroy_image(vars.mlx,img);
+
+// 	//mlx_hook(vars.win, 2, 1L<<0, sclose, &vars);
+
+// 	mlx_mouse_hook(vars.win,sclose, &vars);
+
+	
+// 	mlx_loop(vars.mlx);
+
+// 	sleep(5);
+// 	///mlx_destroy_window(vars.mlx,vars.win);
+// 	mlx_destroy_display(vars.mlx);
+// 	free(vars.mlx);
+// }
+
+int main(int ac,char **av)
 {
-	
-	void *img;
-	t_vars	vars;
+	if(ac == 2)
+	{
+		char **map;
+		map = valid_map_main(av[1]);
+		if(map == NULL)
+		{
+			ft_printf("error");
+		}
+	}
+	else
+		ft_printf("nao tem map");
 
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 500, 500, "Hello world!");
-
-	int		img_width;
-	int		img_height;
-	
-
-
-	img = mlx_xpm_file_to_image(vars.mlx,"./img/Untitled.xpm",&img_width,&img_height);
-	mlx_put_image_to_window(vars.mlx, vars.win, img, 0, 0);
-	//sleep(2);
-	mlx_put_image_to_window(vars.mlx, vars.win, img, 250, 0);
-
-	
-
-	mlx_destroy_image(vars.mlx,img);
-
-	//mlx_hook(vars.win, 2, 1L<<0, sclose, &vars);
-
-	mlx_mouse_hook(vars.win,sclose, &vars);
-
-	
-	mlx_loop(vars.mlx);
-
-	sleep(5);
-	///mlx_destroy_window(vars.mlx,vars.win);
-	mlx_destroy_display(vars.mlx);
-	free(vars.mlx);
+	if(av){}
 }
-
-
 
 

@@ -17,11 +17,13 @@ AR = ar rcs
 
 LIBFT_DIR = libft
 PRINTF_DIR = printf
+Get_next_line_DIR = Get_next_line
 
 LIBFT = $(LIBFT_DIR)/libft.a
 PRINTF = $(PRINTF_DIR)/libftprintf.a
+Get_next_line = $(Get_next_line_DIR)/get_next_line.a
 
-SRCS = libft.a libftprintf.a
+SRCS = libft.a libftprintf.a get_next_line.a
 
 RM = rm -f
 
@@ -34,18 +36,22 @@ $(SRCS):
 	@mv $(LIBFT) .
 	@cd $(PRINTF_DIR) && make 
 	@mv $(PRINTF) .
+	@cd $(Get_next_line_DIR) && make 
+	@mv $(Get_next_line) .
 	$(AR) $@ $^ 
 clean:
 	$(RM) $(SRCS)
 	@cd $(LIBFT_DIR) && make clean
 	@cd $(PRINTF_DIR) && make clean
-	
-	
+	@cd $(Get_next_line_DIR) && make clean
+
 compile:
 	@cd $(LIBFT_DIR) && make bonus
-	@mv $(LIBFT) .1
+	@mv $(LIBFT) .
 	@cd $(PRINTF_DIR) && make
 	@mv $(PRINTF) .
+	@cd $(Get_next_line_DIR) && make
+	@mv $(Get_next_line) .
 
 fclean: clean
 	$(RM) $(SRCS)
