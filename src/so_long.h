@@ -10,8 +10,23 @@
 # include "../libft/Get_next_line/get_next_line_bonus.h"
 
 
+typedef struct  s_point
+{
+int           x;
+int           y;
+}               t_point;
+
+
+
+
 char **valid_map_main(char *url);
 
 char **valid_maps_unes(char **map,int len);
+
+int verfic_char_list(char *list,char set);
+
+void map_print(char **map);
+
+void  flood_fill(char **tab, t_point size, t_point begin,char *list);
 
 #endif

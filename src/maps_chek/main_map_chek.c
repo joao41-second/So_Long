@@ -4,9 +4,8 @@
 void map_print(char **map)
 {
 	int i;
-
 	i = -1;
-
+	ft_printf("\n");
 	while (map[++i] != NULL)
 	{
 		ft_printf("%s",map[i]);
@@ -48,8 +47,11 @@ char **aloc_map(int len , char *url)
 	return(map);
 }
 
-
-
+char **free_null(char **map)
+{
+	map_free(map);
+	return(NULL);
+}
 
 char **valid_map_main(char *url)
 {
@@ -57,28 +59,34 @@ char **valid_map_main(char *url)
 	char *line;
 	int len;
 	char **map;
+	char **copy;
 
+	map = NULL;
 	len = 0;
 	fd = open(url,O_RDONLY );
 	if (fd == -1)
-		return (NULL);
+		return(NULL);
 	line = get_next_line(fd);
+	if(line == NULL)
+	{
+		free(line);
+		return(NULL);
+	}
 	while(line != NULL)
 	{
 		len++;
 		free(line);
 		line = get_next_line(fd);
 	}
-	
 	map = aloc_map(len,url);
 	if(map == NULL)
 		return(NULL);
 	map_print(map);
-	valid_maps_unes(map,len);
-	
-	map_free(map);
+	copy = valid_maps_unes(map,len);
+	if(copy == NULL)
+		map_free(map);
 	close(fd);
-	return(NULL);	
+	return(copy);	
 }
 
 

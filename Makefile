@@ -6,7 +6,7 @@
 #    By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 06:17:31 by jperpect          #+#    #+#              #
-#    Updated: 2024/08/13 16:13:21 by jperpect         ###   ########.fr        #
+#    Updated: 2024/08/14 11:34:11 by jperpect         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ FLGS = -Wall -Wextra -Werror
 
 MAKEFLAGS += -s
 
-FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c
+FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c 
 
 SRCS = $(FILES:.c=.o)
 
-LIB = ./libft/libft.a ./libft/libftprintf.a ./libft/get_next_line.a
+LIB = ./libft/libft.a ./libft/libftprintf.a ./libft/get_next_line.a ./src/maps_chek/valid_map_componets.c
 
 MINX_FLAG = -Lminilibx-linux -lmlx_Linux -lX11 -lXext
 
@@ -55,8 +55,6 @@ all: $(NAME)
 	@echo $(COUNT) > $(COUNT_FILE)
 
 	
-
-
 
 $(NAME) : $(SRCS)
 	cd libft && make compile && make 
