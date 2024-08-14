@@ -1,6 +1,5 @@
 #include "../so_long.h"
 
-
 void map_print(char **map)
 {
 	int i;
