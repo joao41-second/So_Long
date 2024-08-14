@@ -46,7 +46,7 @@ char **aloc_map(int len , char *url)
 	return(map);
 }
 
-char **free_null(char **map)
+static char **free_null(char **map)
 {
 	map_free(map);
 	return(NULL);

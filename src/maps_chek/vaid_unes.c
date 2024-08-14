@@ -44,7 +44,6 @@ static int valid_size(char **map)
 	}
 	return(0);
 }
-
 static int char_cunt(char **map)
 {
 	int x;

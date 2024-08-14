@@ -18,7 +18,6 @@ int           y;
 
 
 
-
 char **valid_map_main(char *url);
 
 char **valid_maps_unes(char **map,int len);
@@ -28,5 +27,14 @@ int verfic_char_list(char *list,char set);
 void map_print(char **map);
 
 void  flood_fill(char **tab, t_point size, t_point begin,char *list);
+
+
+t_point locat_player(char **map);
+/**
+* @brief locate player
+* @param map the game
+* @return x and y locat player
+*/
+
 
 #endif
