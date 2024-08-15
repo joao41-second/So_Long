@@ -99,7 +99,7 @@ t_point locat_player(char **map)
 
 int locat_colt(char **map)
 {
-		int x;
+	int x;
 	int y;
 	int c[3];
 
@@ -121,7 +121,7 @@ int locat_colt(char **map)
 		}
 	}
 	if(c[2] != 0 || c[1] != 0 ||  c[0] != 0 )
-		return(1);
+		return(c[0]);
 	return(0);
 }
 

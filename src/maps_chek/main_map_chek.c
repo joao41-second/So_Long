@@ -32,12 +32,17 @@ char **aloc_map(int len , char *url)
 
 	i = -1;
 	fd = open(url,O_RDONLY );
+
+
+	
 	map = (char**)malloc((len+1) * sizeof(char *));
 	if(map == NULL)
 		return(NULL);
+	
 	while (++i <= len )
 	{
 		map[i] = get_next_line(fd);
+		//ft_printf(map[i]);
 		if(map[i] == NULL)
 			break;
 	}
@@ -46,11 +51,11 @@ char **aloc_map(int len , char *url)
 	return(map);
 }
 
-static char **free_null(char **map)
-{
-	map_free(map);
-	return(NULL);
-}
+// static char **free_null(char **map)
+// {
+// 	map_free(map);
+// 	return(NULL);
+// }
 
 char **valid_map_main(char *url)
 {
@@ -59,12 +64,15 @@ char **valid_map_main(char *url)
 	int len;
 	char **map;
 	char **copy;
+	
 
 	map = NULL;
 	len = 0;
 	fd = open(url,O_RDONLY );
-	if (fd == -1)
+	if (fd == -1){
 		return(NULL);
+		close(fd);
+	}
 	line = get_next_line(fd);
 	if(line == NULL)
 	{
@@ -78,10 +86,14 @@ char **valid_map_main(char *url)
 		line = get_next_line(fd);
 	}
 	map = aloc_map(len,url);
-	if(map == NULL)
+
+	if(map == NULL){
 		return(NULL);
+		close(fd);
+	}
 	map_print(map);
 	copy = valid_maps_unes(map,len);
+	
 	if(copy == NULL)
 		map_free(map);
 	close(fd);

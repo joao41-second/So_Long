@@ -1,0 +1,34 @@
+/* XPM */
+static char *_63d075348954b10df467f149a8c596aMlLbt5jyB9CHcleh[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 12 1 ",
+"  c None",
+". c #F8E7A2",
+"X c #EFD97E",
+"o c #E3CC6A",
+"O c #D9C25E",
+"+ c #D3BB50",
+"@ c #C2B54E",
+"# c #C8B14D",
+"$ c #B7AB49",
+"% c #BBA84C",
+"& c #A99846",
+"* c #998741",
+/* pixels */
+"&&&%%&***&&%%&*&",
+"*#oOoOOoooOOoo#*",
+"&O#+#####+#++#O&",
+"&O+*****&*&**+O*",
+"XO+* o    o *#O*",
+"Xo#&$+$@@$+$&#o&",
+"%Xo% O    O %oX%",
+"&O$*$o    o$*$O*",
+"&o#& o    o &#O&",
+"*o#*$o    o$&#o*",
+"*O+* o    o *+o*",
+"*O#&@o    o$*+O*",
+"&O#* o    o *#O*",
+"&o#*$+$@@$+$&#o*",
+"*o+* O    O &#o*",
+".O#***&&*&**&#O&"
+};

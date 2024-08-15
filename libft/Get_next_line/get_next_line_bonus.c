@@ -21,9 +21,8 @@ static char	*fre(int va1, int va2, char *cha1, char *cha2)
 	return (NULL);
 }
 
-static void	*whilee(char *save, int fd, char *rest)
+static void	*whilee(char *save, int fd, char *rest,int *n)
 {
-	int		n;
 	char	*ret_tmp;
 
 	ret_tmp = (char *)malloc(BUFFER_SIZE + 1 * sizeof(char));
@@ -32,8 +31,8 @@ static void	*whilee(char *save, int fd, char *rest)
 	while (ft_caract_cont(save) <= 0)
 	{
 		ft_bzero(ret_tmp, BUFFER_SIZE + 1);
-		n = read(fd, ret_tmp, BUFFER_SIZE);
-		if (n != 0)
+		n[0] = read(fd, ret_tmp, BUFFER_SIZE);
+		if (n[0] != 0)
 		{
 			save = ft_concatenat_str(save, ret_tmp);
 			if (save == NULL)
@@ -42,7 +41,7 @@ static void	*whilee(char *save, int fd, char *rest)
 		if (ft_strlens(ret_tmp) == 0 && ft_strlens(save) == 0)
 			return (fre(1, 1, ret_tmp, save));
 		ft_bzero(ret_tmp, ft_strlens(ret_tmp) + 1);
-		if (n != BUFFER_SIZE)
+		if (n[0] != BUFFER_SIZE)
 			break ;
 	}
 	if (ret_tmp)
@@ -56,11 +55,13 @@ static char	*get_next_lines(int fd)
 	static char	*rest[1024];
 	int			len_save;
 	int			i;
+	int n;
 
+	n = 0;
 	i = 0;
 	save[fd] = rest[fd];
 	len_save = 0;
-	save[fd] = whilee((char *)save[fd], fd, (char *)rest[fd]);
+	save[fd] = whilee((char *)save[fd], fd, (char *)rest[fd],&n);
 	if (save[fd] == NULL)
 		return (NULL);
 	if (len_save == 0)
@@ -72,6 +73,9 @@ static char	*get_next_lines(int fd)
 	rest[fd] = ft_copy(&save[fd][i + 1], len_save - i, 0);
 	if (rest[fd] == NULL)
 		return (fre(1, 0, (char *)save[fd], (char *)rest[fd]));
+
+	if(n != BUFFER_SIZE)
+		rest[fd] = NULL;
 	return (ft_copy((char *)save[fd], i + 1, 1));
 }
 
