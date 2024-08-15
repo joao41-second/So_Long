@@ -30,7 +30,7 @@ void  flood_fill(char **tab, t_point size, t_point begin,char *list);
 
 char **aloc_map(int len , char *url);
 
-void map_free(char **map);
+char** map_free(char **map);
 
 
 int locat_colt(char **map);

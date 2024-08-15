@@ -1,14 +1,7 @@
 
-
 #include "./src/so_long.h"
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+
 typedef struct s_imgs {
 	int		width;
 	int		height;
@@ -19,54 +12,9 @@ typedef struct	s_vars {
 	void	*mlx;
 	void	*win;
 	char 	**map;
-	t_imgs 	imgs[6];
+	t_imgs 	imgs[5];
 }				t_vars;
 
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-
-// int	main(void)
-// {
-	
-// 	void *img;
-// 	t_vars	vars;
-
-// 	vars.mlx = mlx_init();
-// 	vars.win = mlx_new_window(vars.mlx, 500, 500, "Hello world!");
-
-// 	int		img_width;
-// 	int		img_height;
-	
-
-
-// 	img = mlx_xpm_file_to_image(vars.mlx,"./img/Untitled.xpm",&img_width,&img_height);
-// 	mlx_put_image_to_window(vars.mlx, vars.win, img, 0, 0);
-// 	//sleep(2);
-// 	mlx_put_image_to_window(vars.mlx, vars.win, img, 250, 0);
-
-	
-
-// 	mlx_destroy_image(vars.mlx,img);
-
-// 	//mlx_hook(vars.win, 2, 1L<<0, sclose, &vars);
-
-// 	mlx_mouse_hook(vars.win,sclose, &vars);
-
-	
-// 	mlx_loop(vars.mlx);
-
-// 	sleep(5);
-// 	///mlx_destroy_window(vars.mlx,vars.win);
-// 	mlx_destroy_display(vars.mlx);
-// 	free(vars.mlx);
-// }
 int ft_ponter_len(char **map)
 {
 	int i;
@@ -81,12 +29,30 @@ int ft_ponter_len(char **map)
 t_point window_size(char** map) 
 {
 	t_point size;
-	
-
-	size.x = ft_strlen(map[0]) * 16;
+	size.x = (ft_strlen(map[0])-1) * 16;
 	size.y = ft_ponter_len(map) * 16;
 	return(size);
 }
+
+void img_free(t_vars vars,t_imgs *imgs)
+{
+	mlx_destroy_image(vars.mlx,imgs[0].img);
+	mlx_destroy_image(vars.mlx,imgs[1].img);
+	mlx_destroy_image(vars.mlx,imgs[2].img);
+	mlx_destroy_image(vars.mlx,imgs[3].img);
+	mlx_destroy_image(vars.mlx,imgs[4].img);
+}
+
+// void window_free(t_vars vars)
+// {
+	
+// 	img_free(vars,vars.imgs);
+// 	mlx_destroy_window(vars.mlx,vars.win);
+// 	mlx_destroy_display(vars.mlx);
+// 	free(vars.mlx);
+//  	free(vars.win);
+
+// }
 
 char** new_locat_play(char **map,t_point new_tp)
 {
@@ -95,11 +61,8 @@ char** new_locat_play(char **map,t_point new_tp)
 	tp = locat_player(map);
 	if(map[new_tp.y][new_tp.x] != '1')
 	{
-		if(map[new_tp.y][new_tp.x] == 'E' && locat_colt(map) == 0){
-				
-			map[new_tp.y][new_tp.x] = 'P';
-			map[tp.y][tp.x] = '0';
-		}
+		if(map[new_tp.y][new_tp.x] == 'E' && locat_colt(map) == 0)
+			 return(NULL);
 		else if (map[new_tp.y][new_tp.x] != 'E'){
 			map[new_tp.y][new_tp.x] = 'P';
 			map[tp.y][tp.x] = '0';
@@ -107,7 +70,6 @@ char** new_locat_play(char **map,t_point new_tp)
 	}
 	return(map);
 }
-
 
 t_imgs* img_set(t_vars vars,t_imgs* imgs)
 {
@@ -142,6 +104,8 @@ void render_imgs(t_vars vars, t_imgs *imgs,char **map)
 	size.x = 0;
 	size.y = 0;
 	y = -1;
+	if(map == NULL)
+		return;
 	while (map[++y] != NULL)
 	{
 		x = -1;
@@ -168,11 +132,10 @@ void render_imgs(t_vars vars, t_imgs *imgs,char **map)
 int	sclose(int keycode, t_vars *vars )
 {
 	t_point set_new_palyer;
-	if(keycode ){}
-	if(vars){}
 	set_new_palyer = locat_player(vars->map);
-	if(set_new_palyer.x ){}
-
+	void * ok = vars->mlx;
+	if(keycode == 65307)
+		  mlx_loop_end(ok);
 	if(keycode == 'w')
 		set_new_palyer.y--;
 	
@@ -186,26 +149,27 @@ int	sclose(int keycode, t_vars *vars )
 	{
 	vars->map = new_locat_play(vars->map,set_new_palyer);
 	render_imgs(*vars,vars->imgs,vars->map);
+	if(vars->map == NULL)
+	{
+		 mlx_loop_end( vars->mlx);
+	}
 	}
 	return (0);
 }
-void map_in_img(char **map,t_vars vars)
+
+void map_in_img(char **map,t_vars *vars)
 {
-	
-	
 
-	img_set(vars,vars.imgs);
-	vars.map = map;
-	render_imgs(vars,vars.imgs,map);
+	img_set(*vars,vars->imgs);
+	vars->map = map;
+	render_imgs(*vars,vars->imgs,map);
 	t_point set_new_palyer;
-	set_new_palyer = locat_player(vars.map);
+	set_new_palyer = locat_player(vars->map);
 	if(set_new_palyer.x == 0){}
-	mlx_hook(vars.win, 2, 1L<<0, sclose, &vars);
-
-	//sleep(15);
-	//mlx_destroy_image(vars.mlx,vars.imgs[0].img);
+	mlx_hook(vars->win, 2, 1L<<0, sclose, vars);
 
 }
+
 void window_start(char **map,char **map_copy)
 {
 	t_point size;
@@ -215,14 +179,16 @@ void window_start(char **map,char **map_copy)
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, size.x, size.y, "Hello world!");
 
-	map_in_img(map_copy,vars);
+	map_in_img(map_copy,&vars);
 	
 	mlx_loop(vars.mlx);
 	
-
+	
+	img_free(vars,vars.imgs);
+	
+	mlx_destroy_window(vars.mlx,vars.win);
 	mlx_destroy_display(vars.mlx);
 	free(vars.mlx);
-	free(vars.win);
 }
 
 int main(int ac,char **av)
@@ -236,14 +202,18 @@ int main(int ac,char **av)
 		{
 			ft_printf("error");
 		}
+	
 		ft_printf("test %d",ft_ponter_len(map));
 		map_copy = aloc_map(ft_ponter_len(map),av[1]);
+		
 		if(map_copy == NULL)
 			return(0);
+
+		
 		window_start(map,map_copy);
 		map_free(map);
 		map_free(map_copy);
-	
+		
 		
 
 	}

@@ -11,7 +11,7 @@ void map_print(char **map)
 	}
 }
 
-void map_free(char **map)
+char** map_free(char **map)
 {
 	int i;
 
@@ -21,6 +21,7 @@ void map_free(char **map)
 		free(map[i]);
 	}
 	free(map);
+	return (NULL);
 }
 
 char **aloc_map(int len , char *url)
