@@ -80,7 +80,6 @@ char **valid_map_main(char *url)
 		return(NULL);
 		close(fd);
 	}
-	map_print(map);
 	copy = valid_maps_unes(map,len);
 	if(copy == NULL)
 		map_free(map);
