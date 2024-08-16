@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:36:29 by jperpect          #+#    #+#             */
-/*   Updated: 2024/07/22 18:23:21 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/16 15:03:35 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,8 @@ void				ft_str_btis(int number_bist, int bits, char *bts);
 */
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
+                              
+int verfic_char_list(char *list,char set);
 
 #endif
 

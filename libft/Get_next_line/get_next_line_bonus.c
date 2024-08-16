@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:09:50 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/13 13:40:12 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/16 12:32:00 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,14 @@ static void	*whilee(char *save, int fd, char *rest,int *n)
 	return (save);
 }
 
-static char	*get_next_lines(int fd)
+static char	*get_next_lines(int fd,int i)
 {
 	char		*save[1024];
 	static char	*rest[1024];
 	int			len_save;
-	int			i;
 	int n;
 
 	n = 0;
-	i = 0;
 	save[fd] = rest[fd];
 	len_save = 0;
 	save[fd] = whilee((char *)save[fd], fd, (char *)rest[fd],&n);
@@ -71,11 +69,11 @@ static char	*get_next_lines(int fd)
 	if (i == 0 && save[fd][i] != '\n')
 		return (fre(1, 1, (char *)rest[fd], (char *)save[fd]));
 	rest[fd] = ft_copy(&save[fd][i + 1], len_save - i, 0);
-	if (rest[fd] == NULL)
-		return (fre(1, 0, (char *)save[fd], (char *)rest[fd]));
-
-	if(n != BUFFER_SIZE)
+	if(n != BUFFER_SIZE && ft_strlens(rest[fd]) == 0 )
+	{
+		free(rest[fd]);
 		rest[fd] = NULL;
+	}
 	return (ft_copy((char *)save[fd], i + 1, 1));
 }
 
@@ -83,7 +81,7 @@ char	*get_next_line(int fd)
 {
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	return (get_next_lines(fd));
+	return (get_next_lines(fd,0));
 }
 
 //  int main(void)
