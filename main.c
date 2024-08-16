@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 16:09:50 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/16 17:29:46 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:32:32 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ int	key(int keycode, t_vars *vars )
 	{
 		set_new_palyer = tp(keycode,set_new_palyer );
 	}
-	
-	
 	vars->map = new_locat_play(vars->map,set_new_palyer);
 	render_imgs(*vars,vars->imgs,vars->map);
 	if(vars->map == NULL)

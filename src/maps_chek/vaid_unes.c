@@ -97,51 +97,6 @@ t_point locat_player(char **map)
 	return(player);
 }
 
-int locat_colt(char **map)
-{
-	int x;
-	int y;
-	int c[3];
-
-	c[0] = 0;
-	c[1] = 0;
-	c[2] = 0;
-	y = -1;
-	while (map[++y] != NULL)
-	{
-		x = -1;
-		while (map[y][++x] != '\0')
-		{
-			if(map[y][x] == 'C')
-				c[0]++;
-			if(map[y][x] == 'E')
-				c[1]++;
-			if(map[y][x] == 'P')
-				c[2]++;
-		}
-	}
-	if(c[2] != 0 || c[1] != 0 ||  c[0] != 0 )
-		return(c[0]);
-	return(0);
-}
-
-int chek_chars_invalid(char **map)
-{
-	int x;
-	int y;
-
-	y = -1;
-	while (map[++y] != NULL)
-	{
-		x = -1;
-		while (map[y][++x] != '\0')
-		{
-		  if(verfic_char_list("10CEP\n",map[y][x]) == 0)
-		  	return(-1);
-		}
-	}
-	return(0);
-}
 
 char **valid_maps_unes(char **map,int len)
 {

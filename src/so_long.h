@@ -41,6 +41,7 @@ int ft_ponter_len(char **map);
 
 int	key(int keycode, t_vars *vars );
 
+int chek_chars_invalid(char **map);
 
 t_point locat_player(char **map);
 /**
