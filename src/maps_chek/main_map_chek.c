@@ -34,9 +34,6 @@ char **aloc_map(int len , char *url)
 
 	i = -1;
 	fd = open(url,O_RDONLY );
-
-
-	
 	map = (char**)malloc((len+1) * sizeof(char *));
 	if(map == NULL)
 		return(NULL);
@@ -85,7 +82,6 @@ char **valid_map_main(char *url)
 	}
 	map_print(map);
 	copy = valid_maps_unes(map,len);
-	
 	if(copy == NULL)
 		map_free(map);
 	
