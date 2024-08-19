@@ -47,7 +47,7 @@ char	**aloc_map(int len, char *url)
 	return (map);
 }
 
-static int	ft_len_file(char *url)
+int	ft_len_file(char *url)
 {
 	int		len;
 	char	*line;

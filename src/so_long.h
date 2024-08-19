@@ -40,6 +40,61 @@ typedef struct s_vars
 	t_imgs	imgs[5];
 }			t_vars;
 
+
+typedef struct t_status
+{
+        long int number;
+        long int index;
+        struct t_status *next;
+        struct t_status *previous;
+}       n_status;
+
+
+n_status *ft_node_new(long int n, long int index);
+/**
+* @brief create a new node 
+* @param n in of the save in list
+* @param index index elemente
+* @return node of the memory allcate
+*/
+void	ft_node_add_front(n_status **lst, n_status *new);
+/**
+* @brief contaten list
+* @param lst list;
+* @param nes new elemente of the list;
+*/
+
+void *ft_node_clear(n_status *tes);
+/**
+* @brief giv free in list 
+* @param tes element inical of the node gave free 
+* @return NULL
+*/
+
+n_status *ft_node_start(n_status *list);
+
+/**
+* @brief retrur list in inital node 
+* @param list in one node
+* @return list in intial mode  
+*/
+
+n_status *ft_node_end(n_status *list);
+/**
+* @brief retrur list in final node 
+* @param list in one node
+* @return list in final mode  
+*/
+
+n_status *ft_new_list_null(n_status *list,int len);
+
+void	ft_node_add_inver(n_status **lst, n_status *new);
+
+void ft_print_list(n_status *list ,n_status *list_b);
+
+
+
+
 void		flood_fill(char **tab, t_point size, t_point begin, char *list);
 
 int			ft_ponter_len(char **map);
@@ -52,6 +107,8 @@ int			ft_ponter_len(char **map);
 int			key(int keycode, t_vars *vars);
 
 int			chek_chars_invalid(char **map);
+
+int	ft_len_file(char *url);
 
 t_point		locat_player(char **map);
 /**
