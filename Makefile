@@ -6,7 +6,7 @@
 #    By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 06:17:31 by jperpect          #+#    #+#              #
-#    Updated: 2024/08/19 10:53:10 by jperpect         ###   ########.fr        #
+#    Updated: 2024/08/19 11:48:38 by jperpect         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,11 @@ exec:
 norm: 
 	 yes y|	python3 -m c_formatter_42 -c $(FILES)
 		@rm -f $(COUNT_FILE)
-	
+
+normi:
+	norminette $(FILES)
+	cd ./libft && norminette
+		@rm -f $(COUNT_FILE)
 	
 
 
