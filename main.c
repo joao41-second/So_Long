@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 16:09:50 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 10:56:59 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:23:45 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**new_locat_play(char **map, t_point new_tp)
 	tp = locat_player(map);
 	if (map[new_tp.y][new_tp.x] != '1')
 	{
-		if (map[new_tp.y][new_tp.x] == 'E' && locat_colt(map) == 0)
+		if (map[new_tp.y][new_tp.x] == 'E' && locat_colt(map, 0) == 0)
 			return (NULL);
 		else if (map[new_tp.y][new_tp.x] != 'E')
 		{
@@ -73,7 +73,7 @@ int	key(int keycode, t_vars *vars)
 	if (verfic_char_list("wasd", keycode) == 1)
 	{
 		if (vars->map[set_new_palyer.y][set_new_palyer.x] == 'E'
-			&& locat_colt(vars->map) != 0)
+			&& locat_colt(vars->map, 0) != 0)
 		{
 			set_new_palyer = tp(keycode, set_new_palyer);
 		}
@@ -95,7 +95,6 @@ int	main(int ac, char **av)
 		map = valid_map_main(av[1]);
 		if (map == NULL)
 		{
-			ft_printf("error\n");
 			return (0);
 		}
 		map_copy = aloc_map(ft_ponter_len(map), av[1]);

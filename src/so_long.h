@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 10:47:00 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 10:48:12 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:21:07 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ char		**valid_maps_unes(char **map, int len);
 * @return NULL or map
 */
 
-int			locat_colt(char **map);
+int			locat_colt(char **map,int i);
 /**
  * @brief valid EPC
  * @param map

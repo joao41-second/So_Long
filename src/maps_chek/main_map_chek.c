@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 10:47:27 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 10:47:31 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:07:46 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	**valid_map_main(char *url)
 	len = ft_len_file(url);
 	if (len == 0)
 	{
+		ft_printf("error\n-map not exits");
 		return (NULL);
 	}
 	map = aloc_map(len, url);
