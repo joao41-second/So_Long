@@ -6,7 +6,7 @@
 #    By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 06:17:31 by jperpect          #+#    #+#              #
-#    Updated: 2024/08/19 11:48:38 by jperpect         ###   ########.fr        #
+#    Updated: 2024/08/19 13:56:57 by jperpect         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ FLGS = -Wall -Wextra -Werror
 
 MAKEFLAGS += -s
 
-FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c
+FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c ./src/maps_chek/valid_map_componets.c
 
 SRCS = $(FILES:.c=.o)
 
-LIB = ./libft/libft.a ./libft/libftprintf.a ./libft/get_next_line.a ./src/maps_chek/valid_map_componets.c
+LIB = ./libft/libft.a ./libft/libftprintf.a ./libft/get_next_line.a 
 
 MINX_FLAG = -Lminilibx-linux -lmlx_Linux -lX11 -lXext
 
@@ -32,6 +32,10 @@ CAT = cat number.txt
 
 NAME = so_long
 
+MINIX = ./minilibx-linux/libmlx.a
+ifeq ($(wildcard $(MINIX)),)
+cd  minilibx-linux && make 
+endif
 
 
 COUNT_FILE = count.txt
@@ -54,9 +58,9 @@ all: $(NAME)
 	# Salva o novo valor de COUNT no arquivo
 	@echo $(COUNT) > $(COUNT_FILE)
 
-	
 
 $(NAME) : $(SRCS)
+
 	cd libft && make compile && make 
 	
 	cc $(FLGS) $(SRCS) $(LIB) $(MINX_FLAG) -o $(NAME)
