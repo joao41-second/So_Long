@@ -227,8 +227,8 @@ void				ft_str_btis(int number_bist, int bits, char *bts);
 */
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
-                              
-int verfic_char_list(char *list,char set);
+
+int					verfic_char_list(char *list, char set);
 
 #endif
 

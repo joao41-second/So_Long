@@ -6,16 +6,16 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 15:00:58 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 10:41:27 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:39:03 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-int chek_chars_invalid(char **map)
+int	chek_chars_invalid(char **map)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = -1;
 	while (map[++y] != NULL)
@@ -23,50 +23,48 @@ int chek_chars_invalid(char **map)
 		x = -1;
 		while (map[y][++x] != '\0')
 		{
-		  if(verfic_char_list("10CEP\n",map[y][x]) == 0)
-		  	return(-1);
+			if (verfic_char_list("10CEP\n", map[y][x]) == 0)
+				return (-1);
 		}
 	}
-	return(0);
+	return (0);
 }
 
-void  flood_fill(char **tab, t_point size, t_point begin,char *list)
+t_point	set_cord(int x, int y, t_point cord)
 {
-   
-    t_point novas_codenadas;
-     tab[begin.y][begin.x] = 'o';
-    
-    if(begin.y > 0 && verfic_char_list(list, tab[begin.y - 1][begin.x] )== 1 )
-    {
-        novas_codenadas.x = begin.x;
-        novas_codenadas.y = begin.y-1;
-        flood_fill(tab,size,novas_codenadas,list);
-    }
-    if(begin.x > 0 && verfic_char_list(list, tab[begin.y][begin.x -1]) == 1)
-    {
-        novas_codenadas.x = begin.x-1;
-        novas_codenadas.y = begin.y;
-        flood_fill(tab,size,novas_codenadas,list);
-    }
-    if(begin.y < size.y-1 && verfic_char_list(list, tab[begin.y+1][begin.x]) == 1)
-    {
-        novas_codenadas.x = begin.x;
-        novas_codenadas.y = begin.y +1;
-        flood_fill(tab,size,novas_codenadas,list);
-    }
-    if (begin.x < size.x-1 && verfic_char_list(list, tab[begin.y][begin.x+1]) == 1)
-    {
-        novas_codenadas.x = begin.x + 1;
-        novas_codenadas.y = begin.y;
-        flood_fill(tab,size,novas_codenadas,list);
-    }
+	cord.x += x;
+	cord.y += y;
+	return (cord);
 }
 
-int locat_colt(char **map)
+void	flood_fill(char **tab, t_point size, t_point begin, char *list)
 {
-	int x;
-	int y;
-	int c[3];
+	tab[begin.y][begin.x] = 'o';
+	if (begin.y > 0 && verfic_char_list(list, tab[begin.y - 1][begin.x]) == 1)
+	{
+		flood_fill(tab, size, set_cord(0, -1, begin), list);
+	}
+	if (begin.x > 0 && verfic_char_list(list, tab[begin.y][begin.x - 1]) == 1)
+	{
+		flood_fill(tab, size, set_cord(-1, 0, begin), list);
+	}
+	if (begin.y < size.y - 1 && verfic_char_list(list, tab[begin.y
+				+ 1][begin.x]) == 1)
+	{
+		flood_fill(tab, size, set_cord(0, +1, begin), list);
+	}
+	if (begin.x < size.x - 1 && verfic_char_list(list, tab[begin.y][begin.x
+			+ 1]) == 1)
+	{
+		flood_fill(tab, size, set_cord(+1, 0, begin), list);
+	}
+}
+
+int	locat_colt(char **map)
+{
+	int	x;
+	int	y;
+	int	c[3];
 
 	c[0] = 0;
 	c[1] = 0;
@@ -77,22 +75,22 @@ int locat_colt(char **map)
 		x = -1;
 		while (map[y][++x] != '\0')
 		{
-			if(map[y][x] == 'C')
+			if (map[y][x] == 'C')
 				c[0]++;
-			if(map[y][x] == 'E')
+			if (map[y][x] == 'E')
 				c[1]++;
-			if(map[y][x] == 'P')
+			if (map[y][x] == 'P')
 				c[2]++;
 		}
 	}
-	if(c[2] != 0 || c[1] != 0 ||  c[0] != 0 )
-		return(c[0]);
-	return(0);
+	if (c[2] != 0 || c[1] != 0 || c[0] != 0)
+		return (c[0]);
+	return (0);
 }
 
-char** map_free(char **map)
+char	**map_free(char **map)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (map[++i] != NULL)

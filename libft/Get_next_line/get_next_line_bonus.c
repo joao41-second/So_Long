@@ -21,7 +21,7 @@ static char	*fre(int va1, int va2, char *cha1, char *cha2)
 	return (NULL);
 }
 
-static void	*whilee(char *save, int fd, char *rest,int *n)
+static void	*whilee(char *save, int fd, char *rest, int *n)
 {
 	char	*ret_tmp;
 
@@ -49,17 +49,17 @@ static void	*whilee(char *save, int fd, char *rest,int *n)
 	return (save);
 }
 
-static char	*get_next_lines(int fd,int i)
+static char	*get_next_lines(int fd, int i)
 {
 	char		*save[1024];
 	static char	*rest[1024];
 	int			len_save;
-	int n;
+	int			n;
 
 	n = 0;
 	save[fd] = rest[fd];
 	len_save = 0;
-	save[fd] = whilee((char *)save[fd], fd, (char *)rest[fd],&n);
+	save[fd] = whilee((char *)save[fd], fd, (char *)rest[fd], &n);
 	if (save[fd] == NULL)
 		return (NULL);
 	if (len_save == 0)
@@ -69,7 +69,7 @@ static char	*get_next_lines(int fd,int i)
 	if (i == 0 && save[fd][i] != '\n')
 		return (fre(1, 1, (char *)rest[fd], (char *)save[fd]));
 	rest[fd] = ft_copy(&save[fd][i + 1], len_save - i, 0);
-	if(n != BUFFER_SIZE && ft_strlens(rest[fd]) == 0 )
+	if (n != BUFFER_SIZE && ft_strlens(rest[fd]) == 0)
 	{
 		free(rest[fd]);
 		rest[fd] = NULL;
@@ -81,7 +81,7 @@ char	*get_next_line(int fd)
 {
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	return (get_next_lines(fd,0));
+	return (get_next_lines(fd, 0));
 }
 
 //  int main(void)
@@ -92,12 +92,12 @@ char	*get_next_line(int fd)
 // 	char *oks;
 // 	ok =  get_next_line(id_arqi);
 // 	oks =  get_next_line(id_arqi2);
-// 	 while(ok !=NULL)
-// 	 {	printf("-%s",ok);
-// 	 	printf("-%s",oks);
+// 		while(ok !=NULL)
+// 		{	printf("-%s",ok);
+// 			printf("-%s",oks);
 // 		free (ok);
 // 		free (oks);
-// 	 	ok = get_next_line(id_arqi);
+// 			ok = get_next_line(id_arqi);
 // 		oks = get_next_line(id_arqi2);
-// 	 }
+// 		}
 //  }
