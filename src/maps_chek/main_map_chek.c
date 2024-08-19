@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_map_chek.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/19 10:47:27 by jperpect          #+#    #+#             */
+/*   Updated: 2024/08/19 10:47:31 by jperpect         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "../so_long.h"
 
 void map_print(char **map)
@@ -10,19 +23,6 @@ void map_print(char **map)
 		ft_printf("%s",map[i]);
 	}
 	ft_printf("%s",map[i]);
-}
-
-char** map_free(char **map)
-{
-	int i;
-
-	i = -1;
-	while (map[++i] != NULL)
-	{
-		free(map[i]);
-	}
-	free(map);
-	return (NULL);
 }
 
 char **aloc_map(int len , char *url)
@@ -49,24 +49,21 @@ char **aloc_map(int len , char *url)
 	return(map);
 }
 
-char **valid_map_main(char *url)
+static int ft_len_file(char *url)
 {
-	int fd;
-	char *line;
 	int len;
-	char **map;
-	char **copy;
+	char *line;
+	int fd;
 	
-	map = NULL;
 	len = 0;
 	fd = open(url,O_RDONLY );
 	if (fd == -1){
-		return(NULL);
+		return(0);
 		close(fd);
 	}
 	line = get_next_line(fd);
 	if(line == NULL)
-		return(NULL);
+		return(0);
 	while(line != NULL)
 	{
 		len++;
@@ -74,8 +71,23 @@ char **valid_map_main(char *url)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	map = aloc_map(len,url);
+	return(len);
+}
 
+char **valid_map_main(char *url)
+{
+	int fd;
+	int len;
+	char **map;
+	char **copy;
+	
+	map = NULL;
+	len = ft_len_file(url);
+	if(len == 0)
+	{
+		return(NULL);
+	}
+	map = aloc_map(len,url);
 	if(map == NULL){
 		return(NULL);
 		close(fd);

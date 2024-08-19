@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 15:59:16 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/16 16:16:05 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/19 10:40:05 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,22 @@ void img_free(t_vars vars,t_imgs *imgs)
 	mlx_destroy_image(vars.mlx,imgs[4].img);
 }
 
+static void put_img_window(t_vars vars,t_imgs *imgs,char map,t_point size)
+{
+	if(map == '0')
+		mlx_put_image_to_window(vars.mlx, vars.win, imgs[1].img, size.x,  size.y);
+	if(map == '1')
+		mlx_put_image_to_window(vars.mlx, vars.win, imgs[0].img,  size.x,  size.y);
+	if(map == 'C')
+		mlx_put_image_to_window(vars.mlx, vars.win, imgs[3].img,  size.x,  size.y);
+	if(map == 'E')
+		mlx_put_image_to_window(vars.mlx, vars.win, imgs[4].img,  size.x,  size.y);
+	if(map == 'P')
+		mlx_put_image_to_window(vars.mlx, vars.win, imgs[2].img,  size.x,  size.y);
+
+} 
+
+
 void render_imgs(t_vars vars, t_imgs *imgs,char **map)
 {
 	t_point size;
@@ -62,16 +78,7 @@ void render_imgs(t_vars vars, t_imgs *imgs,char **map)
 		size.x = 0;
 		while (map[y][++x] != '\0')
 		{
-			if(map[y][x] == '0')
-				mlx_put_image_to_window(vars.mlx, vars.win, imgs[1].img, size.x,  size.y);
-			if(map[y][x] == '1')
-				mlx_put_image_to_window(vars.mlx, vars.win, imgs[0].img,  size.x,  size.y);
-			if(map[y][x] == 'C')
-				mlx_put_image_to_window(vars.mlx, vars.win, imgs[3].img,  size.x,  size.y);
-			if(map[y][x] == 'E')
-				mlx_put_image_to_window(vars.mlx, vars.win, imgs[4].img,  size.x,  size.y);
-			if(map[y][x] == 'P')
-				mlx_put_image_to_window(vars.mlx, vars.win, imgs[2].img,  size.x,  size.y);
+			put_img_window(vars,imgs,map[y][x],size);
 			size.x+=16;
 		}
 		size.y+=16;

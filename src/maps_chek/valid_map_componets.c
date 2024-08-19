@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 15:00:58 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/16 17:34:32 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/19 10:41:27 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,3 +90,15 @@ int locat_colt(char **map)
 	return(0);
 }
 
+char** map_free(char **map)
+{
+	int i;
+
+	i = -1;
+	while (map[++i] != NULL)
+	{
+		free(map[i]);
+	}
+	free(map);
+	return (NULL);
+}
