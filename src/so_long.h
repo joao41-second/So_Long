@@ -29,6 +29,10 @@ typedef struct s_imgs
 {
 	int		width;
 	int		height;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 	void	*img;
 }			t_imgs;
 
@@ -38,6 +42,7 @@ typedef struct s_vars
 	void	*win;
 	char	**map;
 	t_imgs	imgs[5];
+	t_point size;
 }			t_vars;
 
 
