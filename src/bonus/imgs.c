@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 15:59:16 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/16 16:16:05 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/20 10:45:23 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_img_full comput_img(int i,char **file,n_status *list,t_vars vars)
 	t_img_full img;
 	int x;
 	int y;
-	img.img = mlx_new_image(vars.mlx, 64, 64);
+	img.img = mlx_new_image(vars.mlx, 300, 300);
 	img.addr = mlx_get_data_addr(img.img,&img.bits_per_pixel,&img.line_length,&img.endian);
 	size.x = 0;
 	size.y = i;
@@ -112,9 +112,12 @@ t_img_full comput_img(int i,char **file,n_status *list,t_vars vars)
 					if(list->number == file[y][x])
 					{
 						if(list->number != 32)
+						{
 							my_mlx_pixel_put(&img,x,y,list->index);
+							break;
+						}
 						if(list->number == 32)
-							my_mlx_pixel_put(&img,x,y,0x00000000);
+							break ;//my_mlx_pixel_put(&img,x,y,0xf00ff000);
 					}
 					
 					list = list->next;
@@ -193,7 +196,7 @@ void render_imgs(t_vars vars, t_imgs *imgs,char **map)
 	t_img_full test;
 	test = img_creat("img/textures/blocks/endlock.xpm",vars);
 	mlx_put_image_to_window(vars.mlx, vars.win, test.img, 0,  0);
-		mlx_put_image_to_window(vars.mlx, vars.win, test.img, 64-32,  64-47);
+	mlx_put_image_to_window(vars.mlx, vars.win, test.img, 64-32,  64-47);
 
 	//mlx_put_image_to_window(vars.mlx, vars.win, imgs[0].img, 64-32,  64-17);
 
