@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 15:59:16 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/20 10:45:23 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:16:05 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct	s_img_full {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		height;
+	int		width;
 }				t_img_full;
 
 
@@ -61,6 +63,13 @@ void	my_mlx_pixel_put(t_img_full *data, int x, int y, int color)
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+unsigned int	my_mlx_pixel_retunr(t_img_full *data, int x, int y)
+{
+	unsigned int color;
+
+	color = *(unsigned int *)(data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8)));
+	return(color);
 }
 
 n_status *clore_set(char **img_fele,int i)
@@ -90,7 +99,7 @@ t_img_full comput_img(int i,char **file,n_status *list,t_vars vars)
 	t_img_full img;
 	int x;
 	int y;
-	img.img = mlx_new_image(vars.mlx, 300, 300);
+	img.img = mlx_new_image(vars.mlx, 64, 64);
 	img.addr = mlx_get_data_addr(img.img,&img.bits_per_pixel,&img.line_length,&img.endian);
 	size.x = 0;
 	size.y = i;
@@ -112,12 +121,9 @@ t_img_full comput_img(int i,char **file,n_status *list,t_vars vars)
 					if(list->number == file[y][x])
 					{
 						if(list->number != 32)
-						{
 							my_mlx_pixel_put(&img,x,y,list->index);
-							break;
-						}
 						if(list->number == 32)
-							break ;//my_mlx_pixel_put(&img,x,y,0xf00ff000);
+							my_mlx_pixel_put(&img,x,y,0x00000000);
 					}
 					
 					list = list->next;
@@ -158,6 +164,47 @@ t_img_full img_creat(char* url,t_vars vars)
 
 
 }
+t_img_full creat_windo(t_img_full img,t_point whindow,t_vars vars)
+{
+	// char *imgs;
+	t_img_full ret;
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,&img.line_length, &img.endian);
+	ret.img = mlx_new_image(vars.mlx, whindow.y, whindow.x);
+	ret.addr = mlx_get_data_addr(ret.img,&ret.bits_per_pixel,&ret.line_length,&ret.endian);
+	
+	int x ;
+	int y ;
+	unsigned int pixel;
+	
+	y = -1;
+	while(++y < 64)
+	{
+		x = -1;
+		while(++x < 64)
+		{
+			pixel = my_mlx_pixel_retunr(&img,x,y);
+			if (pixel != 0x00000000){
+			my_mlx_pixel_put(&ret,x+30,y+30,pixel);
+			}
+		}
+	}
+	y = -1;
+	while(++y < 64)
+	{
+		x = -1;
+		while(++x < 64)
+		{	
+			pixel = my_mlx_pixel_retunr(&img,x,y);
+				if (pixel != 0x00000000){
+			my_mlx_pixel_put(&ret,x+50,y+50,pixel);
+			}
+		}
+	}
+
+	
+	
+	return(ret);
+}
 
 
 void render_imgs(t_vars vars, t_imgs *imgs,char **map)
@@ -194,9 +241,21 @@ void render_imgs(t_vars vars, t_imgs *imgs,char **map)
 	if(map){}
 	if(imgs){}
 	t_img_full test;
-	test = img_creat("img/textures/blocks/endlock.xpm",vars);
-	mlx_put_image_to_window(vars.mlx, vars.win, test.img, 0,  0);
-	mlx_put_image_to_window(vars.mlx, vars.win, test.img, 64-32,  64-47);
+	t_img_full test2;
+	int		width;
+	int		height;
+	
+	test.img = mlx_xpm_file_to_image(vars.mlx,"img/textures/blocks/endlock.xpm",&width,&height);
+	test.height = height;
+	test.width = width;
+	t_point wind;
+	wind.x = 200;
+	wind.y = 200;
+	test2 = creat_windo(test,wind,vars);
+	mlx_put_image_to_window(vars.mlx, vars.win, test2.img, 0,  0);
+	
+	// mlx_put_image_to_window(vars.mlx, vars.win, test.img, 0,  0);
+	// 	mlx_put_image_to_window(vars.mlx, vars.win, test.img, 64-32,  64-47);
 
 	//mlx_put_image_to_window(vars.mlx, vars.win, imgs[0].img, 64-32,  64-17);
 
