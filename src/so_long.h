@@ -42,7 +42,10 @@ typedef struct s_vars
 	void	*win;
 	char	**map;
 	t_imgs	imgs[5];
+	t_imgs	*player;
+	t_imgs	*slime;
 	t_point size;
+	int frame;
 }			t_vars;
 
 
@@ -97,8 +100,9 @@ void	ft_node_add_inver(n_status **lst, n_status *new);
 
 void ft_print_list(n_status *list ,n_status *list_b);
 
+void dell_boll(char**map);
 
-
+char **ger_mob( char **map);
 
 void		flood_fill(char **tab, t_point size, t_point begin, char *list);
 

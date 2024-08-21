@@ -22,7 +22,7 @@ char	**new_locat_play(char **map, t_point new_tp)
 	{
 		if (map[new_tp.y][new_tp.x] == 'E' && locat_colt(map, 0) == 0)
 			return (NULL);
-		else if (map[new_tp.y][new_tp.x] != 'E')
+		else if (map[new_tp.y][new_tp.x] != 'E' && map[new_tp.y][new_tp.x] != 'M'   )
 		{
 			muvs++;
 			ft_printf("muvs = %d\n", muvs);
@@ -59,6 +59,110 @@ static int	convert(int keycode)
 	return (keycode);
 }
 
+void flood(t_point size,char cord,char sin,char **map)
+{
+	int soma;
+	if(sin == '+')
+		soma = 1;
+	else 
+		soma = -1;
+	if(cord == 'y')
+	{
+		if(map[size.y+soma][size.x] == '0' ||map[size.y+soma][size.x] == 'M')
+		{
+			map[size.y+soma][size.x] = 'B';
+			size.y +=soma;
+			
+			flood(size,cord,sin,map);
+			usleep(50000);
+			
+		}
+		
+	}
+	else{
+	if(map[size.y][size.x+soma] == '0' ||map[size.y][size.x+soma] == 'M')
+		{
+			map[size.y][size.x+soma] = 'B';
+			size.x +=soma;
+			
+			flood(size,cord,sin,map);
+			usleep(50000);
+		}
+	}
+
+}
+
+char **boll_anime(char **map,int dir)
+{
+	
+	int b;
+	b = 0;
+	t_point size;
+	//y = -1;
+	 size = locat_player(map);
+
+		if( dir == 'w'   )
+		{
+			flood(size,'y','-',map);
+			b++;
+		}
+		else if( dir == 's' ){
+			flood(size,'y','+',map);
+			b++;
+		}
+		else if( dir == 'd'   )
+		{
+			flood(size,'x','+',map);
+			b++;
+		}
+		else if( dir == 'a' ){
+			flood(size,'x','-',map);
+			b++;
+		}
+
+	return(map);
+}
+
+char **boll(char **map,int key)
+{
+	static int ultm;
+	static int charg = 0;
+	if(verfic_char_list("wasd", key) == 1)
+		ultm = key;
+	if(key == 32)
+		charg++;
+	if(charg > 15 && ultm != 0)
+	{
+	 map =boll_anime(map,ultm);
+		charg = 0;
+	}
+
+	return (map);
+
+}
+
+
+void dell_boll(char**map)
+{
+	int		x;
+	int		y;
+
+	y = -1;
+	if (map == NULL)
+		return ;
+	while (map[++y] != NULL)
+	{
+		x = -1;
+		while (map[y][++x] != '\0')
+		{
+			if(map[y][x] == 'B')
+				map[y][x]='0';
+		}
+	}
+}
+
+
+
 int	key(int keycode, t_vars *vars)
 {
 	t_point	set_new_palyer;
@@ -66,6 +170,7 @@ int	key(int keycode, t_vars *vars)
 
 	set_new_palyer = locat_player(vars->map);
 	ok = vars->mlx;
+	boll(vars->map,keycode);
 	if (keycode == 65307)
 		mlx_loop_end(ok);
 	keycode = convert(keycode);
@@ -78,7 +183,7 @@ int	key(int keycode, t_vars *vars)
 			set_new_palyer = tp(keycode, set_new_palyer);
 		}
 		vars->map = new_locat_play(vars->map, set_new_palyer);
-		render_imgs(*vars, vars->imgs, vars->map);
+		//render_imgs(*vars, vars->imgs, vars->map);
 		if (vars->map == NULL)
 			mlx_loop_end(vars->mlx);
 	}
