@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../so_long.h"
+#include <sys/time.h>
 
 t_imgs* img_set(t_vars vars,t_imgs* imgs)
 {
@@ -66,6 +67,19 @@ t_imgs *img_name(t_vars *vars,char *name,int len,t_imgs *imgs)
 		free(str2);
 		free(str);
 		free(n);
+	}
+	
+	return(imgs);
+}
+t_imgs *free_name(t_vars *vars,int len,t_imgs *imgs)
+{
+	int i;
+	i = -1;
+	while(++i != len)
+	{
+		
+		mlx_destroy_image(vars->mlx,imgs[i].img);
+
 	}
 	
 	return(imgs);
@@ -129,7 +143,7 @@ void put_img(t_imgs img,t_imgs ret ,int wx,int wy)
 t_imgs creat_windo(t_imgs *img,t_vars vars,char ** map )
 {
 	
-	t_imgs ret;
+	static t_imgs ret;
 	int x;
 	int y;
 	int i;
@@ -147,24 +161,45 @@ t_imgs creat_windo(t_imgs *img,t_vars vars,char ** map )
 	x = vars.size.x /4  ;
 	y = vars.size.y /40;
 	
-	
+	int sav = 0;
 		
-	while( map[++e] != NULL){
+	while( map[++e] != NULL ){
+		 if(map[e+1] == NULL && sav == 0)
+		 {
+			sav++;
+			e--;
+		 } 
+			// break;
 		i = -1;
 		x =  (vars.size.x /4)+(-32 * e) ;
 		y = (vars.size.y /40)+ (16  * e);
+		
 		while( map[e] [++i] != '\0' )
 		{
+			if(map[e] [i+1] == '\0')
+				break;
 		y+=16;
 		x+=32;
 		
 		 if(map[e][i] == 'P')
 		{
+			
 			put_img(img[1],ret,x,y);
-			if(vars.frame < 7)
-				put_img(vars.player[vars.frame],ret,x,y);
-			else 
-				put_img(vars.player[0],ret,x,y);
+			if(vars.player.set_palyer_anime == 0)
+			{
+				if(vars.frame < 7)
+					put_img(vars.player.player[vars.frame],ret,x,y-20);
+				else 
+					put_img(vars.player.player[0],ret,x,y-20);
+			}
+			else if (vars.player.set_palyer_anime == 1)
+			{
+				if(vars.frame < 7)
+					put_img(vars.player.player_right[vars.frame],ret,x+(vars.player.x*vars.frame),y+(vars.player.y*vars.frame)-20);
+				else 
+					put_img(vars.player.player[0],ret,x+(vars.player.x*vars.frame),y+(vars.player.y*vars.frame)-20);
+
+			}
 		}
 		else if(map[e][i] == 'M')
 		{
@@ -197,30 +232,53 @@ t_imgs creat_windo(t_imgs *img,t_vars vars,char ** map )
 
 void render_imgs(t_vars vars, t_imgs *imgs,char **map)
 {
+
 	
 	if(map){}
 	if(imgs){}
 	t_imgs test2;
 	test2 = creat_windo(imgs,vars,map);
 	mlx_put_image_to_window(vars.mlx, vars.win, test2.img, 0,  0);
+	mlx_destroy_image(vars.mlx,test2.img);
 
+}
+
+int milltimestamp()
+{
+	 struct timeval tp;
+    gettimeofday(&tp, NULL);
+    long int ms = tp.tv_sec * 1000 ;
+	return(ms);
 }
 
 int frams(t_vars *vars)
 {
+	static long long  now;
+	long long diff_mil;
+
+	if(now == 0)
+		now = milltimestamp();
+	diff_mil =  milltimestamp() - now;
+	//ft_printf("frames %d\n",diff_mil);
+	if(diff_mil > 15){
 	static int frame = 0;
-	if(frame == 24)
+	if(frame == 7)
 		frame = 0;
 	if(vars->win){}
 	//ft_printf("oi");
+	if(vars->frame == 6)
+		vars->player.set_palyer_anime = 0;
 	vars->frame = frame;
-	//ft_printf(" frame %d\n",frame);
+	usleep(90000);
 	render_imgs(*vars,vars->imgs,vars->map);
 	if(frame == 0)
 		dell_boll(vars->map);
 	
-	usleep(50000);
+	
 	frame++;
+	//now = milltimestamp();
+	}
+	
 	return(1);
 }
 
@@ -228,10 +286,14 @@ void map_in_img(char **map,t_vars *vars)
 {
 	t_imgs player[8];
 	t_imgs slime[2];
-	
-	vars->player = img_name(vars,"./img/textures/player/player_j",7,player);
+	t_imgs player_right[8];
+	vars->player.x = 0;
+	vars->player.y = 0;
+
+	vars->player.player = img_name(vars,"./img/textures/player/sandart/frame_",7,player);
 	vars->slime = img_name(vars,"img/textures/slime/slime_",1,slime);
-	//vars->player = player;
+	vars->player.player_right =  img_name(vars,"./img/textures/player/dir_and/frame_",7,player_right);
+	vars->player.set_palyer_anime = 0;
 	vars->frame = 3;
 	img_set(*vars,vars->imgs);
 	vars->map =   ger_mob(map);
@@ -241,7 +303,9 @@ void map_in_img(char **map,t_vars *vars)
 
 	mlx_loop_hook(vars->mlx,frams,vars);
 	mlx_loop(vars->mlx);
-
+	free_name(vars,7,player_right);
+	free_name(vars,7,player);
+	free_name(vars,1,slime);
 	
 	
 }

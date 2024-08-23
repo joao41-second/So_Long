@@ -36,13 +36,25 @@ typedef struct s_imgs
 	void	*img;
 }			t_imgs;
 
+typedef struct s_player
+{
+	t_imgs	*player;
+	t_imgs	*player_right;
+	int x;
+	int y;
+	int set_palyer_anime;
+} 	t_player;
+
+
 typedef struct s_vars
 {
 	void	*mlx;
 	void	*win;
 	char	**map;
 	t_imgs	imgs[5];
-	t_imgs	*player;
+
+
+	t_player player;
 	t_imgs	*slime;
 	t_point size;
 	int frame;
@@ -100,7 +112,11 @@ void	ft_node_add_inver(n_status **lst, n_status *new);
 
 void ft_print_list(n_status *list ,n_status *list_b);
 
+
+
 void dell_boll(char**map);
+
+int frams(t_vars *vars);
 
 char **ger_mob( char **map);
 

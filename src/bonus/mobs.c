@@ -35,7 +35,7 @@ char **ger_mob( char **map)
 		{
 			if(map[y][x] == '0')
             {
-                map[y][x]= ft_random(49,100);
+                map[y][x]= ft_random(45,100);
             }
 			
 		}

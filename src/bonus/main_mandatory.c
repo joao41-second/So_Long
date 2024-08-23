@@ -28,8 +28,8 @@ int ft_ponter_len(char **map)
 t_point window_size(char** map) 
 {
 	t_point size;
-	size.x = (ft_strlen(map[0])-1) * 48;
-	size.y = ft_ponter_len(map) * 64;
+	size.x = (ft_strlen(map[0])-1) * 64;
+	size.y = ft_ponter_len(map) * 86;
 	return(size);
 }
 
@@ -45,6 +45,7 @@ void window_start(char **map_copy)
 	mlx_hook(vars.win,DestroyNotify,0l,&mlx_loop_end,vars.mlx);
 	map_in_img(map_copy,&vars);
 	mlx_loop(vars.mlx);
+
 	img_free(vars,vars.imgs);
 	mlx_destroy_window(vars.mlx,vars.win);
 	mlx_destroy_display(vars.mlx);

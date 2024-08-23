@@ -12,7 +12,7 @@
 
 #include "./src/so_long.h"
 
-char	**new_locat_play(char **map, t_point new_tp)
+char	**new_locat_play(char **map, t_point new_tp,int *end)
 {
 	t_point		tp;
 	static int	muvs = 0;
@@ -21,7 +21,10 @@ char	**new_locat_play(char **map, t_point new_tp)
 	if (map[new_tp.y][new_tp.x] != '1')
 	{
 		if (map[new_tp.y][new_tp.x] == 'E' && locat_colt(map, 0) == 0)
-			return (NULL);
+		{
+			end[0] = 1;
+			return (map);
+		}
 		else if (map[new_tp.y][new_tp.x] != 'E' && map[new_tp.y][new_tp.x] != 'M'   )
 		{
 			muvs++;
@@ -74,7 +77,7 @@ void flood(t_point size,char cord,char sin,char **map)
 			size.y +=soma;
 			
 			flood(size,cord,sin,map);
-			usleep(50000);
+			
 			
 		}
 		
@@ -86,7 +89,7 @@ void flood(t_point size,char cord,char sin,char **map)
 			size.x +=soma;
 			
 			flood(size,cord,sin,map);
-			usleep(50000);
+			
 		}
 	}
 
@@ -166,8 +169,10 @@ void dell_boll(char**map)
 int	key(int keycode, t_vars *vars)
 {
 	t_point	set_new_palyer;
+	int send;
 	void	*ok;
-
+	
+	send =0;
 	set_new_palyer = locat_player(vars->map);
 	ok = vars->mlx;
 	boll(vars->map,keycode);
@@ -182,9 +187,21 @@ int	key(int keycode, t_vars *vars)
 		{
 			set_new_palyer = tp(keycode, set_new_palyer);
 		}
-		vars->map = new_locat_play(vars->map, set_new_palyer);
+		vars->player.set_palyer_anime = 1;
+		vars->frame = 0;
+		vars->player.x = 2;
+		vars->player.y = 0; //para sima y -5
+		int i =0;
+		while(++i < 8 )
+		{
+			frams(vars);;
+		}
+		
+		vars->map = new_locat_play(vars->map, set_new_palyer,&send);
+		
+	
 		//render_imgs(*vars, vars->imgs, vars->map);
-		if (vars->map == NULL)
+		if (send == 1 )
 			mlx_loop_end(vars->mlx);
 	}
 	return (0);
