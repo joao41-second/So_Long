@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 10:47:00 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/25 19:23:01 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/25 20:04:47 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void dell_boll(char**map);
 int frams(t_vars *vars);
 
 char **ger_mob( char **map);
+
+int vlaid_ext(char *ext,char *str);
 
 void		flood_fill(char **tab, t_point size, t_point begin, char *list);
 

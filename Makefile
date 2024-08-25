@@ -6,7 +6,7 @@
 #    By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 06:17:31 by jperpect          #+#    #+#              #
-#    Updated: 2024/08/25 19:11:21 by jperpect         ###   ########.fr        #
+#    Updated: 2024/08/25 20:34:18 by jperpect         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,14 @@ FLGS = -Wall -Wextra -Werror
 
 MAKEFLAGS += -s
 
-#FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c ./src/maps_chek/valid_map_componets.c
-FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/bonus/main_mandatory.c  ./src/bonus/imgs.c ./src/maps_chek/valid_map_componets.c \
-	./src/bonus/mobs.c 
+#FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c ./src/maps_chek/valid_map_componets.c ./src/maps_chek/valid_str.c
+
+FILES = ./src/bonus/main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/bonus/main_mandatory.c  ./src/bonus/imgs.c ./src/maps_chek/valid_map_componets.c \
+	./src/bonus/mobs.c ./src/maps_chek/valid_str.c
 
 
 SRCS = $(FILES:.c=.o)
+BON = $(BONUS:.c=.o)
 
 LIB = ./libft/libft.a ./libft/libftprintf.a ./libft/get_next_line.a 
 
@@ -53,9 +55,9 @@ COUNT = $(shell cat $(COUNT_FILE))
 
 #.SILENT:
 
-all: $(NAME)
+all: $(NAME) 
 %.o:%.c 
-	@cc -c $(FLGS) -o $@ $< && clear && echo $(COUNT) && sleep 0.2
+	@cc -c $(FLGS)  -o $@ $< && clear && echo $(COUNT) && sleep 0.2
 	$(eval COUNT=$(shell echo $$(( $(COUNT) + 1 ))))
 
 	# Salva o novo valor de COUNT no arquivo
@@ -74,8 +76,14 @@ $(NAME) : $(SRCS)
 	echo "╚══════════════════════════╝"
 	@rm -f $(COUNT_FILE)
 	
-bonus: $(OBJECT_B) $(NAME)
-	ar rcs $(NAME) $^
+bonus:$(BON)
+	cd libft && make compile && make 
+	
+	cc $(FLGS) $(BONUS) $(LIB) $(MINX_FLAG)  
+	echo "╔══════════════════════════╗"
+	echo "║ ✅ Compiled Successfully!║"
+	echo "╚══════════════════════════╝"
+	@rm -f $(COUNT_FILE)
 	
 
 clean: $(fclean)
