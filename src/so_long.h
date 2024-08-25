@@ -40,8 +40,10 @@ typedef struct s_player
 {
 	t_imgs	*player;
 	t_imgs	*player_right;
+	t_imgs	*player_atak;
 	int x;
 	int y;
+	int frame_atak;
 	int set_palyer_anime;
 } 	t_player;
 
@@ -57,7 +59,7 @@ typedef struct s_vars
 	t_player player;
 	t_imgs	*slime;
 	t_point size;
-	int frame;
+	 int frame;
 }			t_vars;
 
 

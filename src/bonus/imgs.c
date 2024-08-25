@@ -209,7 +209,10 @@ t_imgs creat_windo(t_imgs *img,t_vars vars,char ** map )
 		else if(map[e][i] == 'B')
 		{
 			put_img(img[1],ret,x,y);
-			put_img(img[2],ret,x,y);
+			if(vars.frame < 9)
+				put_img(vars.player.player_atak[vars.frame],ret,x,y);
+			else 
+				put_img(vars.player.player_atak[vars.frame/4],ret,x,y);
 		}
 		else if(map[e][i] == 'C')
 		{
@@ -251,6 +254,18 @@ int milltimestamp()
 	return(ms);
 }
 
+
+int anime_update( int frame,int max)
+{
+	if(frame > max)
+	{
+		frame = 0;
+	}
+	frame++;
+	return(frame);
+}
+
+
 int frams(t_vars *vars)
 {
 	static long long  now;
@@ -262,20 +277,22 @@ int frams(t_vars *vars)
 	//ft_printf("frames %d\n",diff_mil);
 	if(diff_mil > 15){
 	static int frame = 0;
-	if(frame == 7)
-		frame = 0;
-	if(vars->win){}
+	if(frame > 30)
+	frame = 0;
+	
 	//ft_printf("oi");
 	if(vars->frame == 6)
 		vars->player.set_palyer_anime = 0;
 	vars->frame = frame;
-	usleep(90000);
+
 	render_imgs(*vars,vars->imgs,vars->map);
-	if(frame == 0)
+
+
+	if(frame == 30)
 		dell_boll(vars->map);
 	
-	
 	frame++;
+	
 	//now = milltimestamp();
 	}
 	
@@ -287,12 +304,14 @@ void map_in_img(char **map,t_vars *vars)
 	t_imgs player[8];
 	t_imgs slime[2];
 	t_imgs player_right[8];
+	t_imgs player_atak[10];
 	vars->player.x = 0;
 	vars->player.y = 0;
 
 	vars->player.player = img_name(vars,"./img/textures/player/sandart/frame_",7,player);
 	vars->slime = img_name(vars,"img/textures/slime/slime_",1,slime);
 	vars->player.player_right =  img_name(vars,"./img/textures/player/dir_and/frame_",7,player_right);
+	vars->player.player_atak = img_name(vars,"./img/textures/fire_atack/frame_",10,player_atak);
 	vars->player.set_palyer_anime = 0;
 	vars->frame = 3;
 	img_set(*vars,vars->imgs);
@@ -306,6 +325,7 @@ void map_in_img(char **map,t_vars *vars)
 	free_name(vars,7,player_right);
 	free_name(vars,7,player);
 	free_name(vars,1,slime);
+	free_name(vars,10,player_atak);
 	
 	
 }

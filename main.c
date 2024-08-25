@@ -20,7 +20,7 @@ char	**new_locat_play(char **map, t_point new_tp,int *end)
 	tp = locat_player(map);
 	if (map[new_tp.y][new_tp.x] != '1')
 	{
-		if (map[new_tp.y][new_tp.x] == 'E' && locat_colt(map, 0) == 0)
+		if ((map[new_tp.y][new_tp.x] == 'E' && locat_colt(map, 0) == 0  )|| map[new_tp.y][new_tp.x] == 'M')
 		{
 			end[0] = 1;
 			return (map);
@@ -187,15 +187,15 @@ int	key(int keycode, t_vars *vars)
 		{
 			set_new_palyer = tp(keycode, set_new_palyer);
 		}
-		vars->player.set_palyer_anime = 1;
-		vars->frame = 0;
-		vars->player.x = 2;
-		vars->player.y = 0; //para sima y -5
-		int i =0;
-		while(++i < 8 )
-		{
-			frams(vars);;
-		}
+		//vars->player.set_palyer_anime = 1;
+		// vars->frame = 0;
+		// vars->player.x = 2;
+		// vars->player.y = 0; //para sima y -5
+		// int i =0;
+		// while(++i < 8 )
+		// {
+		// 	frams(vars);;
+		// }
 		
 		vars->map = new_locat_play(vars->map, set_new_palyer,&send);
 		
