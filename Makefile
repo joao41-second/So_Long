@@ -6,7 +6,7 @@
 #    By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 06:17:31 by jperpect          #+#    #+#              #
-#    Updated: 2024/08/25 20:34:18 by jperpect         ###   ########.fr        #
+#    Updated: 2024/08/25 20:43:52 by jperpect         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,9 @@ FLGS = -Wall -Wextra -Werror
 
 MAKEFLAGS += -s
 
-#FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c ./src/maps_chek/valid_map_componets.c ./src/maps_chek/valid_str.c
+FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c ./src/maps_chek/valid_map_componets.c ./src/maps_chek/valid_str.c
 
-FILES = ./src/bonus/main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/bonus/main_mandatory.c  ./src/bonus/imgs.c ./src/maps_chek/valid_map_componets.c \
+BONUS = ./src/bonus/main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/bonus/main_mandatory.c  ./src/bonus/imgs.c ./src/maps_chek/valid_map_componets.c \
 	./src/bonus/mobs.c ./src/maps_chek/valid_str.c
 
 
@@ -55,7 +55,7 @@ COUNT = $(shell cat $(COUNT_FILE))
 
 #.SILENT:
 
-all: $(NAME) 
+all: $(NAME) $(BONUS)
 %.o:%.c 
 	@cc -c $(FLGS)  -o $@ $< && clear && echo $(COUNT) && sleep 0.2
 	$(eval COUNT=$(shell echo $$(( $(COUNT) + 1 ))))
@@ -88,14 +88,14 @@ bonus:$(BON)
 
 clean: $(fclean)
 	$(RM)  $(SRCS)
+	$(RM)  $(BON)
 	$(RM)  $(OBJS_CLI)
 	cd ./libft && make clean
 		@rm -f $(COUNT_FILE)
-
 fclean: $(clean)
-
 	$(RM) $(NAME)
-		@rm -f $(COUNT_FILE)
+	@rm -f $(COUNT_FILE)
+	make clean
 
 
 re: fclean all
