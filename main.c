@@ -6,13 +6,13 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 16:09:50 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 12:23:45 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:45:33 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./src/so_long.h"
 
-char	**new_locat_play(char **map, t_point new_tp,int *end)
+char	**new_locat_play(char **map, t_point new_tp,int *end,t_vars *vars)
 {
 	t_point		tp;
 	static int	muvs = 0;
@@ -29,6 +29,7 @@ char	**new_locat_play(char **map, t_point new_tp,int *end)
 		{
 			muvs++;
 			ft_printf("muvs = %d\n", muvs);
+			vars->muvs = muvs;
 			map[new_tp.y][new_tp.x] = 'P';
 			map[tp.y][tp.x] = '0';
 		}
@@ -77,10 +78,7 @@ void flood(t_point size,char cord,char sin,char **map)
 			size.y +=soma;
 			
 			flood(size,cord,sin,map);
-			
-			
 		}
-		
 	}
 	else{
 	if(map[size.y][size.x+soma] == '0' ||map[size.y][size.x+soma] == 'M')
@@ -89,7 +87,6 @@ void flood(t_point size,char cord,char sin,char **map)
 			size.x +=soma;
 			
 			flood(size,cord,sin,map);
-			
 		}
 	}
 
@@ -101,7 +98,6 @@ char **boll_anime(char **map,int dir)
 	int b;
 	b = 0;
 	t_point size;
-	//y = -1;
 	 size = locat_player(map);
 
 		if( dir == 'w'   )
@@ -122,7 +118,6 @@ char **boll_anime(char **map,int dir)
 			flood(size,'x','-',map);
 			b++;
 		}
-
 	return(map);
 }
 
@@ -180,27 +175,21 @@ int	key(int keycode, t_vars *vars)
 		mlx_loop_end(ok);
 	keycode = convert(keycode);
 	set_new_palyer = tp(keycode, set_new_palyer);
+	
 	if (verfic_char_list("wasd", keycode) == 1)
 	{
+		vars->player.set_palyer_anime = 0;
 		if (vars->map[set_new_palyer.y][set_new_palyer.x] == 'E'
 			&& locat_colt(vars->map, 0) != 0)
 		{
 			set_new_palyer = tp(keycode, set_new_palyer);
 		}
-		//vars->player.set_palyer_anime = 1;
-		// vars->frame = 0;
-		// vars->player.x = 2;
-		// vars->player.y = 0; //para sima y -5
-		// int i =0;
-		// while(++i < 8 )
-		// {
-		// 	frams(vars);;
-		// }
+		vars->player.set_palyer_anime = 1;
 		
-		vars->map = new_locat_play(vars->map, set_new_palyer,&send);
+		vars->map = new_locat_play(vars->map, set_new_palyer,&send,vars);
 		
 	
-		//render_imgs(*vars, vars->imgs, vars->map);
+		
 		if (send == 1 )
 			mlx_loop_end(vars->mlx);
 	}

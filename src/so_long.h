@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 10:47:00 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 12:21:07 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:23:01 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_vars
 	void	*win;
 	char	**map;
 	t_imgs	imgs[5];
+	int muvs;
 
 
 	t_player player;

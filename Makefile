@@ -6,7 +6,7 @@
 #    By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 06:17:31 by jperpect          #+#    #+#              #
-#    Updated: 2024/08/19 13:56:57 by jperpect         ###   ########.fr        #
+#    Updated: 2024/08/25 19:11:21 by jperpect         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ MAKEFLAGS += -s
 
 #FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c ./src/maps_chek/valid_map_componets.c
 FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/bonus/main_mandatory.c  ./src/bonus/imgs.c ./src/maps_chek/valid_map_componets.c \
-	./src/list_f.c ./src/list_f_2.c ./src/bonus/mobs.c 
+	./src/bonus/mobs.c 
 
 
 SRCS = $(FILES:.c=.o)
@@ -61,6 +61,8 @@ all: $(NAME)
 	# Salva o novo valor de COUNT no arquivo
 	@echo $(COUNT) > $(COUNT_FILE)
 
+$(MLX):
+	@make -sC minilibx-linux
 
 $(NAME) : $(SRCS)
 
@@ -76,15 +78,13 @@ bonus: $(OBJECT_B) $(NAME)
 	ar rcs $(NAME) $^
 	
 
-clean:
-	
-	$(fclean)
+clean: $(fclean)
 	$(RM)  $(SRCS)
 	$(RM)  $(OBJS_CLI)
 	cd ./libft && make clean
 		@rm -f $(COUNT_FILE)
 
-fclean: clean
+fclean: $(clean)
 
 	$(RM) $(NAME)
 		@rm -f $(COUNT_FILE)

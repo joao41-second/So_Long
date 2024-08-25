@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 15:59:16 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/16 16:16:05 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:46:32 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ int frams(t_vars *vars)
 {
 	static long long  now;
 	long long diff_mil;
+	char  *muv;
 
 	if(now == 0)
 		now = milltimestamp();
@@ -286,14 +287,14 @@ int frams(t_vars *vars)
 	vars->frame = frame;
 
 	render_imgs(*vars,vars->imgs,vars->map);
-
-
+	
 	if(frame == 30)
 		dell_boll(vars->map);
-	
+	usleep(10000);
 	frame++;
-	
-	//now = milltimestamp();
+	muv = ft_itoa(vars->muvs);
+	mlx_string_put(vars->mlx, vars->win, 10, 10, 0xffff0000, muv);
+	free(muv);
 	}
 	
 	return(1);
@@ -307,7 +308,7 @@ void map_in_img(char **map,t_vars *vars)
 	t_imgs player_atak[10];
 	vars->player.x = 0;
 	vars->player.y = 0;
-
+	vars->muvs = 0;
 	vars->player.player = img_name(vars,"./img/textures/player/sandart/frame_",7,player);
 	vars->slime = img_name(vars,"img/textures/slime/slime_",1,slime);
 	vars->player.player_right =  img_name(vars,"./img/textures/player/dir_and/frame_",7,player_right);
