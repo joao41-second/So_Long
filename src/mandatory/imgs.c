@@ -6,9 +6,11 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 15:59:16 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 11:07:42 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/26 00:41:00 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../so_long.h"
 
 #include "../so_long.h"
 

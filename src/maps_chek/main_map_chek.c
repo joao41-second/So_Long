@@ -82,8 +82,8 @@ char	**valid_map_main(char *url)
 
 	map = NULL;
 	len = ft_len_file(url);
-	if(vlaid_ext(".ber",url) == 0)
-		return(NULL);
+	if (vlaid_ext(".ber", url) == 0)
+		return (NULL);
 	if (len == 0)
 	{
 		ft_printf("error\n-map not exits");

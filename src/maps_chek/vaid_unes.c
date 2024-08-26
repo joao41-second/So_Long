@@ -41,7 +41,7 @@ static int	valid_lines(char **map, int len)
 	return (0);
 }
 
-static	int	valid_size(char **map)
+static int	valid_size(char **map)
 {
 	int	size;
 	int	i;

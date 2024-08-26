@@ -6,7 +6,7 @@
 #    By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 06:17:31 by jperpect          #+#    #+#              #
-#    Updated: 2024/08/25 20:43:52 by jperpect         ###   ########.fr        #
+#    Updated: 2024/08/26 01:56:23 by jperpect         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ MAKEFLAGS += -s
 FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c ./src/maps_chek/valid_map_componets.c ./src/maps_chek/valid_str.c
 
 BONUS = ./src/bonus/main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/bonus/main_mandatory.c  ./src/bonus/imgs.c ./src/maps_chek/valid_map_componets.c \
-	./src/bonus/mobs.c ./src/maps_chek/valid_str.c
+	./src/bonus/mobs.c ./src/maps_chek/valid_str.c ./src/bonus/random.c ./src/bonus/imgs_2.c ./src/bonus/imgs_3.c ./src/bonus/imgs_4.c ./src/bonus/map_if.c
 
 
 SRCS = $(FILES:.c=.o)
@@ -38,9 +38,10 @@ CAT = cat number.txt
 NAME = so_long
 
 MINIX = ./minilibx-linux/libmlx.a
-ifeq ($(wildcard $(MINIX)),)
-cd  minilibx-linux && make 
-endif
+
+MINILIBX_PATH	= ./minilibx-linux
+
+
 
 
 COUNT_FILE = count.txt
@@ -50,36 +51,34 @@ ifeq ($(wildcard $(COUNT_FILE)),)
     $(shell echo 0 > $(COUNT_FILE))
 endif
 
+
 COUNT = $(shell cat $(COUNT_FILE))
 
 
+$(MINIX):
+	$(MAKE) all -C $(MINILIBX_PATH)
 #.SILENT:
 
-all: $(NAME) $(BONUS)
-%.o:%.c 
-	@cc -c $(FLGS)  -o $@ $< && clear && echo $(COUNT) && sleep 0.2
-	$(eval COUNT=$(shell echo $$(( $(COUNT) + 1 ))))
-
-	# Salva o novo valor de COUNT no arquivo
-	@echo $(COUNT) > $(COUNT_FILE)
-
-$(MLX):
-	@make -sC minilibx-linux
-
-$(NAME) : $(SRCS)
-
+$(NAME) : $(MINIX) $(SRCS)
 	cd libft && make compile && make 
-	
 	cc $(FLGS) $(SRCS) $(LIB) $(MINX_FLAG) -o $(NAME)
 	echo "╔══════════════════════════╗"
 	echo "║ ✅ Compiled Successfully!║"
 	echo "╚══════════════════════════╝"
 	@rm -f $(COUNT_FILE)
-	
+
+all: $(NAME) $(BONUS)
+%.o:%.c 
+	@cc -c $(FLGS) -o $@ $< && clear && echo $(COUNT) && sleep 0.2
+	$(eval COUNT=$(shell echo $$(( $(COUNT) + 1 ))))
+
+	# Salva o novo valor de COUNT no arquivo
+	@echo $(COUNT) > $(COUNT_FILE)
+
 bonus:$(BON)
 	cd libft && make compile && make 
 	
-	cc $(FLGS) $(BONUS) $(LIB) $(MINX_FLAG)  
+	cc $(FLGS) $(BONUS) $(LIB) $(MINX_FLAG) -o $(NAME)
 	echo "╔══════════════════════════╗"
 	echo "║ ✅ Compiled Successfully!║"
 	echo "╚══════════════════════════╝"
@@ -110,6 +109,7 @@ norm:
 
 normi:
 	norminette $(FILES)
+	norminette $(BONUS)
 	cd ./libft && norminette
 		@rm -f $(COUNT_FILE)
 	
