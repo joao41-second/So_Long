@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:09:50 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/16 12:32:00 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:29:23 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*fre(int va1, int va2, char *cha1, char *cha2)
 	return (NULL);
 }
 
-static void	*whilee(char *save, int fd, char *rest, int *n)
+static void	*whilee(char *save, int fd, int *n)
 {
 	char	*ret_tmp;
 
@@ -35,8 +35,6 @@ static void	*whilee(char *save, int fd, char *rest, int *n)
 		if (n[0] != 0)
 		{
 			save = ft_concatenat_str(save, ret_tmp);
-			if (save == NULL)
-				fre(1, 0, ret_tmp, rest);
 		}
 		if (ft_strlens(ret_tmp) == 0 && ft_strlens(save) == 0)
 			return (fre(1, 1, ret_tmp, save));
@@ -59,7 +57,7 @@ static char	*get_next_lines(int fd, int i)
 	n = 0;
 	save[fd] = rest[fd];
 	len_save = 0;
-	save[fd] = whilee((char *)save[fd], fd, (char *)rest[fd], &n);
+	save[fd] = whilee((char *)save[fd], fd, &n);
 	if (save[fd] == NULL)
 		return (NULL);
 	if (len_save == 0)
