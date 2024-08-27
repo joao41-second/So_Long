@@ -113,5 +113,5 @@ int	main(int ac, char **av)
 		map_free(map_copy);
 	}
 	else
-		ft_printf("nao tem map");
+		ft_printf("error\n not map");
 }

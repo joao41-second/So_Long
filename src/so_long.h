@@ -62,7 +62,6 @@ typedef struct s_vars
 	int				frame;
 }					t_vars;
 
-
 char				**boll_anime(char **map, int dir, t_point size);
 char				**boll(char **map, int key);
 void				dell_boll(char **map);
@@ -90,7 +89,6 @@ t_imgs				while_y(t_imgs ret, t_vars vars, t_point e_i, t_point y_x);
 t_imgs				creat_windo(t_vars vars, char **map);
 void				render_imgs(t_vars vars, t_imgs *imgs, char **map);
 int					milltimestamp(void);
-
 
 void				dell_boll(char **map);
 
@@ -216,6 +214,4 @@ int					locat_colt(char **map, int i);
 */
 
 //  #####=END=#####
-
-
 #endif

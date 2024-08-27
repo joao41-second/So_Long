@@ -6,7 +6,7 @@
 #    By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 06:17:31 by jperpect          #+#    #+#              #
-#    Updated: 2024/08/26 01:56:23 by jperpect         ###   ########.fr        #
+#    Updated: 2024/08/26 02:22:41 by jperpect         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,19 +44,15 @@ MINILIBX_PATH	= ./minilibx-linux
 
 
 
-COUNT_FILE = count.txt
+
 
 # Verifica se o arquivo existe; se não, cria com valor inicial 0
-ifeq ($(wildcard $(COUNT_FILE)),)
-    $(shell echo 0 > $(COUNT_FILE))
-endif
+
 
 
 COUNT = $(shell cat $(COUNT_FILE))
 
 
-$(MINIX):
-	$(MAKE) all -C $(MINILIBX_PATH)
 #.SILENT:
 
 $(NAME) : $(MINIX) $(SRCS)
@@ -67,13 +63,13 @@ $(NAME) : $(MINIX) $(SRCS)
 	echo "╚══════════════════════════╝"
 	@rm -f $(COUNT_FILE)
 
+$(MINIX):
+	$(MAKE) -C $(MINILIBX_PATH)
 all: $(NAME) $(BONUS)
 %.o:%.c 
-	@cc -c $(FLGS) -o $@ $< && clear && echo $(COUNT) && sleep 0.2
-	$(eval COUNT=$(shell echo $$(( $(COUNT) + 1 ))))
+	@cc -c $(FLGS) -o $@ $< 
 
-	# Salva o novo valor de COUNT no arquivo
-	@echo $(COUNT) > $(COUNT_FILE)
+
 
 bonus:$(BON)
 	cd libft && make compile && make 
@@ -86,6 +82,7 @@ bonus:$(BON)
 	
 
 clean: $(fclean)
+	make -C ./minilibx-linux clean clean 
 	$(RM)  $(SRCS)
 	$(RM)  $(BON)
 	$(RM)  $(OBJS_CLI)
