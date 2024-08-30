@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:16:58 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/16 12:18:31 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:26:10 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*ft_copy(char *str, int a, int frees)
 	while (++i < a)
 		ret[i] = str[i];
 	ret[i] = '\0';
-	if (frees == 1)
+	if (frees == 1 && str)
 		free(str);
 	return (ret);
 }

@@ -6,13 +6,13 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 20:13:39 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/26 00:40:09 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:57:21 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./src/so_long.h"
 
-char	**new_locat_play(char **map, t_point new_tp)
+char	**new_locat_play(char **map, t_point new_tp, int e)
 {
 	t_point		tp;
 	static int	muvs = 0;
@@ -25,7 +25,7 @@ char	**new_locat_play(char **map, t_point new_tp)
 		else if (map[new_tp.y][new_tp.x] != 'E')
 		{
 			muvs++;
-			ft_printf("muvs = %d\n", muvs);
+			ft_printf("muvs = %d\n", muvs + e);
 			map[new_tp.y][new_tp.x] = 'P';
 			map[tp.y][tp.x] = '0';
 		}
@@ -63,7 +63,9 @@ int	key(int keycode, t_vars *vars)
 {
 	t_point	set_new_palyer;
 	void	*ok;
+	int		e;
 
+	e = 0;
 	set_new_palyer = locat_player(vars->map);
 	ok = vars->mlx;
 	if (keycode == 65307)
@@ -75,9 +77,10 @@ int	key(int keycode, t_vars *vars)
 		if (vars->map[set_new_palyer.y][set_new_palyer.x] == 'E'
 			&& locat_colt(vars->map, 0) != 0)
 		{
+			e = 1;
 			set_new_palyer = tp(keycode, set_new_palyer);
 		}
-		vars->map = new_locat_play(vars->map, set_new_palyer);
+		vars->map = new_locat_play(vars->map, set_new_palyer, e);
 		render_imgs(*vars, vars->imgs, vars->map);
 		if (vars->map == NULL)
 			mlx_loop_end(vars->mlx);

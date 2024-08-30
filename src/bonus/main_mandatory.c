@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 02:10:27 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/26 02:13:17 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 09:47:25 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_point	window_size(char **map)
 {
 	t_point	size;
 
-	size.x = (ft_strlen(map[0]) - 1) * 86;
+	size.x = (ft_strlen(map[0]) - 1) * 64;
 	size.y = ft_ponter_len(map) * 86;
 	return (size);
 }

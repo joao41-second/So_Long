@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 10:47:41 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/25 19:54:57 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:58:17 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	valid_lines(char **map, int len)
 	{
 		if (map[i][0] != '1')
 			return (-1);
-		if (map[i][size - 2] != '1')
+		if (size > 2 && map[i][size - 2] != '1')
 			return (-1);
 	}
 	return (0);

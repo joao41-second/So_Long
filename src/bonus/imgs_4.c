@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 00:33:02 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/26 02:04:08 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 09:46:03 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_imgs	creat_windo( t_vars vars, char **map)
 	ret.addr = mlx_get_data_addr(ret.img, &ret.bits_per_pixel, &ret.line_length,
 			&ret.endian);
 	e_i.x = -1;
-	y_x = ret_x_y(vars.size.x / 4, vars.size.y / 40);
+	y_x = ret_x_y(vars.size.x / 6, vars.size.y / 60);
 	sav = 0;
 	while (map[++e_i.x] != NULL)
 	{

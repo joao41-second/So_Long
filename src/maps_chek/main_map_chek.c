@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 10:47:27 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/27 11:22:41 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:51:55 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ char	**valid_map_main(char *url)
 	char	**copy;
 
 	map = NULL;
-	len = ft_len_file(url);
 	if (vlaid_ext(".ber", url) == 0)
 		return (NULL);
+	len = ft_len_file(url);
 	if (len == 0)
 	{
 		ft_printf("error\n-map not exits");
