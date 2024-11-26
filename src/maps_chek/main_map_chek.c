@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 10:47:27 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 12:07:46 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:51:55 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**aloc_map(int len, char *url)
 	return (map);
 }
 
-static int	ft_len_file(char *url)
+int	ft_len_file(char *url)
 {
 	int		len;
 	char	*line;
@@ -57,8 +57,8 @@ static int	ft_len_file(char *url)
 	fd = open(url, O_RDONLY);
 	if (fd == -1)
 	{
-		return (0);
 		close(fd);
+		return (0);
 	}
 	line = get_next_line(fd);
 	if (line == NULL)
@@ -75,12 +75,13 @@ static int	ft_len_file(char *url)
 
 char	**valid_map_main(char *url)
 {
-	int		fd;
 	int		len;
 	char	**map;
 	char	**copy;
 
 	map = NULL;
+	if (vlaid_ext(".ber", url) == 0)
+		return (NULL);
 	len = ft_len_file(url);
 	if (len == 0)
 	{
@@ -91,7 +92,6 @@ char	**valid_map_main(char *url)
 	if (map == NULL)
 	{
 		return (NULL);
-		close(fd);
 	}
 	copy = valid_maps_unes(map, len);
 	if (copy == NULL)

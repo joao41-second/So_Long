@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 10:47:41 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/20 16:14:28 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:58:17 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ static int	valid_lines(char **map, int len)
 	{
 		if (map[i][0] != '1')
 			return (-1);
-		if (map[i][size - 2] != '1')
+		if (size > 2 && map[i][size - 2] != '1')
 			return (-1);
 	}
 	return (0);
 }
 
-static	int	valid_size(char **map)
+static int	valid_size(char **map)
 {
 	int	size;
 	int	i;
@@ -128,7 +128,7 @@ char	**valid_maps_unes(char **map, int len)
 	size.y = len - 1;
 	size.x = ft_strlen(map[0]) - 1;
 	flood_fill(map, size, start, "C0EP");
-	if (locat_colt(map, 1) == 0)
+	if (locat_colt(map, 1) > 0)
 	{
 		ft_printf("error\n-not possibe end game");
 		return (NULL);

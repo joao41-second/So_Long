@@ -6,7 +6,7 @@
 #    By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 06:17:31 by jperpect          #+#    #+#              #
-#    Updated: 2024/08/19 13:56:57 by jperpect         ###   ########.fr        #
+#    Updated: 2024/08/26 02:22:41 by jperpect         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,14 @@ FLGS = -Wall -Wextra -Werror
 
 MAKEFLAGS += -s
 
-FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c ./src/maps_chek/valid_map_componets.c
+FILES = main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/mandatory/main_mandatory.c  ./src/mandatory/imgs.c ./src/maps_chek/valid_map_componets.c ./src/maps_chek/valid_str.c
+
+BONUS = ./src/bonus/main.c ./src/maps_chek/main_map_chek.c ./src/maps_chek/vaid_unes.c  ./src/bonus/main_mandatory.c  ./src/bonus/imgs.c ./src/maps_chek/valid_map_componets.c \
+	./src/bonus/mobs.c ./src/maps_chek/valid_str.c ./src/bonus/random.c ./src/bonus/imgs_2.c ./src/bonus/imgs_3.c ./src/bonus/imgs_4.c ./src/bonus/map_if.c
+
 
 SRCS = $(FILES:.c=.o)
+BON = $(BONUS:.c=.o)
 
 LIB = ./libft/libft.a ./libft/libftprintf.a ./libft/get_next_line.a 
 
@@ -33,58 +38,60 @@ CAT = cat number.txt
 NAME = so_long
 
 MINIX = ./minilibx-linux/libmlx.a
-ifeq ($(wildcard $(MINIX)),)
-cd  minilibx-linux && make 
-endif
+
+MINILIBX_PATH	= ./minilibx-linux
 
 
-COUNT_FILE = count.txt
+
+
+
 
 # Verifica se o arquivo existe; se não, cria com valor inicial 0
-ifeq ($(wildcard $(COUNT_FILE)),)
-    $(shell echo 0 > $(COUNT_FILE))
-endif
+
+
 
 COUNT = $(shell cat $(COUNT_FILE))
 
 
 #.SILENT:
 
-all: $(NAME)
-%.o:%.c 
-	@cc -c $(FLGS) -o $@ $< && clear && echo $(COUNT) && sleep 0.2
-	$(eval COUNT=$(shell echo $$(( $(COUNT) + 1 ))))
-
-	# Salva o novo valor de COUNT no arquivo
-	@echo $(COUNT) > $(COUNT_FILE)
-
-
-$(NAME) : $(SRCS)
-
+$(NAME) : $(MINIX) $(SRCS)
 	cd libft && make compile && make 
-	
 	cc $(FLGS) $(SRCS) $(LIB) $(MINX_FLAG) -o $(NAME)
 	echo "╔══════════════════════════╗"
 	echo "║ ✅ Compiled Successfully!║"
 	echo "╚══════════════════════════╝"
 	@rm -f $(COUNT_FILE)
+
+$(MINIX):
+	$(MAKE) -C $(MINILIBX_PATH)
+all: $(NAME) $(BONUS)
+%.o:%.c 
+	@cc -c $(FLGS) -o $@ $< 
+
+
+
+bonus:$(BON)
+	cd libft && make compile && make 
 	
-bonus: $(OBJECT_B) $(NAME)
-	ar rcs $(NAME) $^
+	cc $(FLGS) $(BONUS) $(LIB) $(MINX_FLAG) -o $(NAME)
+	echo "╔══════════════════════════╗"
+	echo "║ ✅ Compiled Successfully!║"
+	echo "╚══════════════════════════╝"
+	@rm -f $(COUNT_FILE)
 	
 
-clean:
-	
-	$(fclean)
+clean: $(fclean)
+	make -C ./minilibx-linux clean clean 
 	$(RM)  $(SRCS)
+	$(RM)  $(BON)
 	$(RM)  $(OBJS_CLI)
 	cd ./libft && make clean
 		@rm -f $(COUNT_FILE)
-
-fclean: clean
-
+fclean: $(clean)
 	$(RM) $(NAME)
-		@rm -f $(COUNT_FILE)
+	@rm -f $(COUNT_FILE)
+	make clean
 
 
 re: fclean all
@@ -99,6 +106,7 @@ norm:
 
 normi:
 	norminette $(FILES)
+	norminette $(BONUS)
 	cd ./libft && norminette
 		@rm -f $(COUNT_FILE)
 	

@@ -6,9 +6,11 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 15:59:16 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 11:07:42 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:04:18 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../so_long.h"
 
 #include "../so_long.h"
 
@@ -18,23 +20,23 @@ t_imgs	*img_set(t_vars vars, t_imgs *imgs)
 	int	height;
 
 	imgs[0].img = mlx_xpm_file_to_image(vars.mlx,
-			"./img/mand/bamboo_mosaic.xpm", &width, &height);
+			"./textures/mand/bamboo_mosaic.xpm", &width, &height);
 	imgs[0].width = width;
 	imgs[0].height = height;
-	imgs[1].img = mlx_xpm_file_to_image(vars.mlx, "./img/mand/bamboo_block.xpm",
-			&width, &height);
+	imgs[1].img = mlx_xpm_file_to_image(vars.mlx,
+			"./textures/mand/bamboo_block.xpm", &width, &height);
 	imgs[1].width = width;
 	imgs[1].height = height;
-	imgs[2].img = mlx_xpm_file_to_image(vars.mlx, "./img/mand/palyer-16_16.xpm",
-			&width, &height);
+	imgs[2].img = mlx_xpm_file_to_image(vars.mlx,
+			"./textures/mand/palyer-16_16.xpm", &width, &height);
 	imgs[2].width = width;
 	imgs[2].height = height;
-	imgs[3].img = mlx_xpm_file_to_image(vars.mlx, "./img/mand/coin-_16_16.xpm",
-			&width, &height);
+	imgs[3].img = mlx_xpm_file_to_image(vars.mlx,
+			"./textures/mand/coin-_16_16.xpm", &width, &height);
 	imgs[3].width = width;
 	imgs[3].height = height;
 	imgs[4].img = mlx_xpm_file_to_image(vars.mlx,
-			"./img/mand/bamboo_door_top.xpm", &width, &height);
+			"./textures/mand/bamboo_door_top.xpm", &width, &height);
 	imgs[4].width = width;
 	imgs[4].height = height;
 	return (imgs);

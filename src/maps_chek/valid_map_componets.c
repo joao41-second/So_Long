@@ -6,7 +6,7 @@
 /*   By: jperpect <jperpect@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 15:00:58 by jperpect          #+#    #+#             */
-/*   Updated: 2024/08/19 12:20:41 by jperpect         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:36:49 by jperpect         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	flood_fill(char **tab, t_point size, t_point begin, char *list)
 	}
 }
 
-int	locat_colt(char **map,int i)
+int	locat_colt(char **map, int i)
 {
 	int	x;
 	int	y;
@@ -83,7 +83,7 @@ int	locat_colt(char **map,int i)
 				c[2]++;
 		}
 	}
-	if (c[2] != 0 || c[1] != 0 || c[0] != 0)
+	if (c[2] != 0 || c[1] != 0 || c[0] != i)
 		return (c[0]);
 	return (0);
 }
